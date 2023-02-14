@@ -1,0 +1,39 @@
+html{
+    font-size: 1.5rem;
+}
+
+.audio{
+    width: 100%;
+}
+
+.controls_container{
+    justify-content: center;
+    display: flex;
+    align-items: start;
+}
+
+#json_raw{
+    resize: both;
+    overflow: scroll;
+    height: 25rem;
+    width: 20rem;
+}
+
+.attribute{
+    width: 100%;
+    display: inline-block;
+    background-color: #ddd;
+    border: solid 1px #444;
+    margin: 2px 0;
+    border-radius: .3rem;
+}
+.checkbox{
+    display: none;
+}
+input:checked + label {
+    background-color: #6ab5ff;
+  }
+input:disabled + label {
+    background-color: #646464;
+    text-decoration: line-through;
+}
