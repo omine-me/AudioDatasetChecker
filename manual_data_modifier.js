@@ -63,7 +63,8 @@ function saveJson(){
 }
 
 async function loadJson(basepath, basename){
-    await fetch("../data/out/features/laughter_feats/"+basepath)
+    console.log(basepath+".json")
+    await fetch(basepath+".json")
         .then( response => response.json())
         .catch(response=>alert("Error occured while fetching json"))
         .then( data => {
@@ -73,7 +74,7 @@ async function loadJson(basepath, basename){
             // console.log(laughters)
             document.getElementById("start_time").value = laughters[current_laughter].start_sec
             document.getElementById("end_time").value = laughters[current_laughter].end_sec
-            loadaudio(basename)
+            // loadaudio(basename)
             next_laughter('')
         })
         .catch(data=>alert("Error occured while loading json or audio"));
@@ -93,6 +94,9 @@ function update_state(elm_name){
 
 function update_play_before(){
     document.getElementById("play_from_n_sec_before_curr_val").innerText = document.getElementById("play_from_n_sec_before").value
+}
+function update_min_prob(){
+    document.getElementById("min_prob_counter").innerText = document.getElementById("min_prob").value
 }
 
 function loadaudio(basename){
@@ -124,7 +128,7 @@ function next_file(next_or_prev){
     document.getElementById("except_not_a_laugh").checked = false
     document.getElementById("except_by_laugh_by_oneself_prob").checked = false
 
-    // console.log(current_file_idx)
+    console.log(files[current_file_idx])
     basepath = files[current_file_idx].webkitRelativePath
     basename = files[current_file_idx].name.slice(0,-5) //拡張し外す
     // console.log(basename)
@@ -145,7 +149,8 @@ function next_laughter(next_or_prev){
             if ((document.getElementById("except_by_laugh_by_oneself_prob").checked &&
                 laughters[current_laughter]["laugh_by_oneself_prob"] > laugh_by_oneself_prob_thre) ||
                 (document.getElementById("except_not_a_laugh").checked &&
-                laughters[current_laughter]["not_a_laugh"])){
+                laughters[current_laughter]["not_a_laugh"]) || 
+                (document.getElementById("min_prob").value > laughters[current_laughter]["prob"])){
                     next_laughter(next_or_prev)
                     return
             }
@@ -158,7 +163,8 @@ function next_laughter(next_or_prev){
             if ((document.getElementById("except_by_laugh_by_oneself_prob").checked &&
                 laughters[current_laughter]["laugh_by_oneself_prob"] > laugh_by_oneself_prob_thre) ||
                 (document.getElementById("except_not_a_laugh").checked &&
-                laughters[current_laughter]["not_a_laugh"])){
+                laughters[current_laughter]["not_a_laugh"]) || 
+                (document.getElementById("min_prob").value > laughters[current_laughter]["prob"])){
                     next_laughter(next_or_prev)
                     return
             }
@@ -167,27 +173,27 @@ function next_laughter(next_or_prev){
     document.getElementById("start_time").value = laughters[current_laughter].start_sec
     document.getElementById("end_time").value = laughters[current_laughter].end_sec
     // console.log(laughters[0])
-    attributes.forEach((attr)=>{
-        if (laughters[current_laughter].hasOwnProperty(attr.name)){
-            if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
-                document.getElementById(attr.name).value = laughters[current_laughter][attr.name]
-            }else{
-                document.getElementById(attr.name).checked = laughters[current_laughter][attr.name]
-            }
-        }else {
-            if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
-                // console.log(attr.name)
-                document.getElementById(attr.name).value = ""
-                // console.log(document.getElementById(attr.name).value)
-                laughters[current_laughter][attr.name] = ""
-                // console.log(laughters[current_laughter][attr.attr.name])
-            }else{
-                document.getElementById(attr.name).checked = false
-                laughters[current_laughter][attr.name] = false
-            }
+    // attributes.forEach((attr)=>{
+    //     if (laughters[current_laughter].hasOwnProperty(attr.name)){
+    //         if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
+    //             document.getElementById(attr.name).value = laughters[current_laughter][attr.name]
+    //         }else{
+    //             document.getElementById(attr.name).checked = laughters[current_laughter][attr.name]
+    //         }
+    //     }else {
+    //         if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
+    //             // console.log(attr.name)
+    //             document.getElementById(attr.name).value = ""
+    //             // console.log(document.getElementById(attr.name).value)
+    //             laughters[current_laughter][attr.name] = ""
+    //             // console.log(laughters[current_laughter][attr.attr.name])
+    //         }else{
+    //             document.getElementById(attr.name).checked = false
+    //             laughters[current_laughter][attr.name] = false
+    //         }
             
-        }
-    })
+    //     }
+    // })
     let play_from_n_sec_before = document.getElementById("play_from_n_sec_before").value
     ori_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
     mono_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
@@ -248,23 +254,23 @@ window.addEventListener("load", ()=>{
     mono_audioElm = audios[1]
     console.log(audios)
 
-    attr_html = ""
-    attributes.forEach((attr)=>{
-        if (attr.type == "bool"){
-            attr_html += `<li><input id="${attr.name}" type="checkbox" class="checkbox" onclick='update_state("${attr.name}")'><label for="${attr.name}" class="attribute"><span>${attr.dis_name}</span></label><br></li>`
-        }else if (attr.type == "text" || attr.type == "float"){
-            attr_html += `<li><span>${attr.dis_name}</span><input id="${attr.name}" type="text" style="display: block;width: 100%;" onfocusout='update_state("${attr.name}")'></li>`
-        }
-    })
-    document.getElementById("attributes").innerHTML = attr_html
+    // attr_html = ""
+    // attributes.forEach((attr)=>{
+    //     if (attr.type == "bool"){
+    //         attr_html += `<li><input id="${attr.name}" type="checkbox" class="checkbox" onclick='update_state("${attr.name}")'><label for="${attr.name}" class="attribute"><span>${attr.dis_name}</span></label><br></li>`
+    //     }else if (attr.type == "text" || attr.type == "float"){
+    //         attr_html += `<li><span>${attr.dis_name}</span><input id="${attr.name}" type="text" style="display: block;width: 100%;" onfocusout='update_state("${attr.name}")'></li>`
+    //     }
+    // })
+    // document.getElementById("attributes").innerHTML = attr_html
 
-    attributes.forEach((attr)=>{
-        if (attr.type == "bool"){
-            document.getElementById(attr.name).checked = false
-        }else{            
-            document.getElementById(attr.name).value = ""
-        }
-    })
+    // attributes.forEach((attr)=>{
+    //     if (attr.type == "bool"){
+    //         document.getElementById(attr.name).checked = false
+    //     }else{            
+    //         document.getElementById(attr.name).value = ""
+    //     }
+    // })
     document.getElementById("play_ori").checked = true
     
     audios.forEach(function(target) {
@@ -327,16 +333,6 @@ document.addEventListener('keydown', event => {
 });
 
 document.getElementById("files").addEventListener("change", ev => {
-    // for (let i = 0; i < ev.target.files.length; i++) {
-    //   let file = ev.target.files[i];
-    // //   console.log(file.webkitRelativePath)
-  
-    //   // ディレクトリの相対パス
-    //   let relativePath = file.webkitRelativePath;
-  
-    //   let fileReader = new FileReader();
-    //   fileReader.readAsDataURL(file);
-    // }
     files = ev.target.files
     current_file = files[0].name
     // console.log(files)
@@ -344,4 +340,24 @@ document.getElementById("files").addEventListener("change", ev => {
     current_laughter = 0
     current_file_idx = -1
     next_file("next")
+});
+
+let json_reader = new FileReader();
+document.getElementById('json_file').addEventListener('change', () => {
+    let file = document.getElementById('json_file').files[0]
+    json_reader.readAsText(file, 'UTF-8' )
+    json_reader.onload = ()=> {
+        laughters = JSON.parse(json_reader.result)
+        console.log(laughters);
+    };
+});
+
+let audio_reader = new FileReader();
+document.getElementById('audio_file').addEventListener('change', (ev) => {
+    let file = document.getElementById('audio_file').files[0]
+    audio_reader.onload = () => {
+        ori_audioElm.pause();
+        ori_audioElm.src = audio_reader.result;
+    };
+    audio_reader.readAsDataURL(file);
 });
