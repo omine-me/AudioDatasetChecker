@@ -37,3 +37,12 @@ input:disabled + label {
     background-color: #646464;
     text-decoration: line-through;
 }
+#dirs{
+    width: 30%;
+    overflow: scroll;
+    resize: auto;
+}
+figure{
+    margin:0;
+    white-space: nowrap;
+}
