@@ -16,10 +16,18 @@
         </div>
     </div>
     <div class="controls_container">
+        <div id="dirs">
+            <div>json<input type="file" id="json_files" name="upfile[]" webkitdirectory /></div>
+            <div id="json_dir"></div>
+            <div>audio<input type="file" id="audio_files" name="upfile[]" webkitdirectory /></div>
+            <div id="audio_dir"></div>
+        </div>
         <div id="controls" style="">
             <div>
-                <div> json<input id="json_file" type="file" name="json_file"> audio<input id="audio_file" type="file" name="audio_file"></div>
-                <div><input type="file" id="files" name="upfile[]" webkitdirectory /></div>
+                <!-- <div> json<input id="json_file" type="file" name="json_file"> audio<input id="audio_file" type="file" name="audio_file"></div> -->
+                
+                <div><span>Json File: </span><span id="json_file_name"></span></div>
+                <div><span>Audio File: </span><span id="audio_file_name"></span></div>
                 <div><span>Files: </span><span id="file_done_ratio"></span></div>
                 <div><span>Laughs: </span><span id="laugh_done_ratio"></span></div>
                 <div>Audio Source: 
@@ -62,7 +70,7 @@
                     <span id="play_from_n_sec_before_curr_val">2</span><span>秒前から再生</span><input id="play_from_n_sec_before" type="range" oninput="update_play_before()" min="0" max="10" step="1" value="2">
                     <input id="except_by_laugh_by_oneself_prob" type="checkbox" class="checkbox"><label for="except_by_laugh_by_oneself_prob" class="attribute"><span>自発語確定度が低い笑いをスキップ</span></label>
                     <input id="except_not_a_laugh" type="checkbox" class="checkbox"><label for="except_not_a_laugh" class="attribute"><span>笑いでないをスキップ</span></label>
-                    <li><span>min prob</span><span id="min_prob_counter"></span><input id="min_prob" oninput="update_min_prob()" type="range" min="0" max="1" step=".1" value=".5"><br></li>
+                    <li><span>min prob</span><span id="min_prob_counter"></span><input id="min_prob" oninput="update_min_prob()" type="range" min="0" max="1" step=".1" value=".8"><br></li>
                 </div>
             </div>
         </div>
