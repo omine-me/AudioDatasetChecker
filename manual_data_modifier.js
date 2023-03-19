@@ -1,4 +1,5 @@
-let files = []
+let jsonfiles = []
+let audiofiles = []
 let current_file_idx = 0
 let ori_audioElm = ""
 let mono_audioElm = ""
@@ -27,13 +28,6 @@ const attributes = [
 const laugh_by_oneself_prob_thre = 0.45
 
 function formatJSON(){
-    // // JSONファイルを整形して表示
-    // let html = "";
-    // for(let i=0;i < Object.keys(json).length; i++){
-    //     html += "<p>" + json[i]["rms"] + "/" + json[i]["length"] + "</p>";
-    // }
-    // console.log(JSON.stringify(json, null, "　"))
-    // document.getElementById("json_raw").innerHTML = JSON.stringify(json, null, 2);
     document.getElementById("json_raw").innerText = JSON.stringify(laughters[current_laughter], null, "　");
 }
 
@@ -62,9 +56,8 @@ function saveJson(){
     }
 }
 
-async function loadJson(basepath, basename){
-    console.log(basepath+".json")
-    await fetch(basepath+".json")
+async function loadJson(idx){
+    await fetch(URL.createObjectURL(jsonfiles[idx]))
         .then( response => response.json())
         .catch(response=>alert("Error occured while fetching json"))
         .then( data => {
@@ -75,11 +68,12 @@ async function loadJson(basepath, basename){
             document.getElementById("start_time").value = laughters[current_laughter].start_sec
             document.getElementById("end_time").value = laughters[current_laughter].end_sec
             // loadaudio(basename)
+            document.getElementById("json_file_name").innerText = jsonfiles[idx]["name"]
             next_laughter('')
         })
-        .catch(data=>alert("Error occured while loading json or audio"));
-    
+        .catch(data=>alert("Error occured while loading json or audio"));    
 }
+
 
 function update_state(elm_name){
     if (elm_name == "other_error"){
@@ -99,9 +93,9 @@ function update_min_prob(){
     document.getElementById("min_prob_counter").innerText = document.getElementById("min_prob").value
 }
 
-function loadaudio(basename){
-    ori_audioElm.src = "../data/input/"+basename.slice(0,-2)+".wav"
-    mono_audioElm.src = "../data/out/"+basename+"/"+basename+".wav"    
+function loadaudio(audiofile){
+    ori_audioElm.src =  URL.createObjectURL(audiofile);
+    document.getElementById("audio_file_name").innerText = audiofile["name"]
 }
 
 function next_file(next_or_prev){
@@ -133,7 +127,7 @@ function next_file(next_or_prev){
     basename = files[current_file_idx].name.slice(0,-5) //拡張し外す
     // console.log(basename)
     loadJson(basepath, basename)
-    document.getElementById("file_done_ratio").innerText = (current_file_idx +1) + "/" + files.length +": " + files[current_file_idx].name
+    // document.getElementById("file_done_ratio").innerText = (current_file_idx +1) + "/" + files.length +": " + files[current_file_idx].name
     document.getElementById("laugh_done_ratio").innerText = (current_laughter +1) + "/" + Object.keys(laughters).length
 
     
@@ -247,6 +241,7 @@ function playback_speed(gain){
     document.getElementById("play_speed").innerText = ori_audioElm.playbackRate
 }
 
+// 読み込み時にすること
 window.addEventListener("load", ()=>{
 
     let audios = document.querySelectorAll(".audio");
@@ -284,7 +279,7 @@ window.addEventListener("load", ()=>{
             }
         });
     });
-    document.getElementById("files").focus()
+    document.getElementById("json_files").focus()
 });
 
 document.addEventListener('keydown', event => {
@@ -332,32 +327,36 @@ document.addEventListener('keydown', event => {
     
 });
 
-document.getElementById("files").addEventListener("change", ev => {
-    files = ev.target.files
-    current_file = files[0].name
+document.getElementById("json_files").addEventListener("change", ev => {
+    jsonfiles = ev.target.files
+    show_dir(jsonfiles, "json_dir")
+});
+document.getElementById("audio_files").addEventListener("change", ev => {
+    audiofiles = ev.target.files
+    show_dir(audiofiles, "audio_dir")
+});
+
+function show_dir(files, type){
     // console.log(files)
-    // basename = files[0].name.slice(0,-5)
-    current_laughter = 0
-    current_file_idx = -1
-    next_file("next")
-});
+    let figure = document.createElement("figure");
+    figure.innerHTML = ``;
+    for (let i = 0; i < files.length; i++) {
+        figure.innerHTML += `
+            <button onclick="select('${i}', '${type}')">${files[i].webkitRelativePath}</button><br/>
+            `;
+    }
+    document.getElementById(type).innerHTML='';
+    document.getElementById(type).insertBefore(figure, null);
+}
 
-let json_reader = new FileReader();
-document.getElementById('json_file').addEventListener('change', () => {
-    let file = document.getElementById('json_file').files[0]
-    json_reader.readAsText(file, 'UTF-8' )
-    json_reader.onload = ()=> {
-        laughters = JSON.parse(json_reader.result)
-        console.log(laughters);
-    };
-});
-
-let audio_reader = new FileReader();
-document.getElementById('audio_file').addEventListener('change', (ev) => {
-    let file = document.getElementById('audio_file').files[0]
-    audio_reader.onload = () => {
-        ori_audioElm.pause();
-        ori_audioElm.src = audio_reader.result;
-    };
-    audio_reader.readAsDataURL(file);
-});
+function select(idx, type){
+    const basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
+    for (let i = 0; i < audiofiles.length; i++) {
+        if (audiofiles[i]["name"].match(basename)){
+            loadaudio(audiofiles[i])
+            break;
+        }
+    }
+    loadJson(idx)
+    
+}
