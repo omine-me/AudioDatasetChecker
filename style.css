@@ -41,6 +41,7 @@ input:disabled + label {
     width: 30%;
     overflow: scroll;
     resize: auto;
+    height: 30rem;
 }
 figure{
     margin:0;

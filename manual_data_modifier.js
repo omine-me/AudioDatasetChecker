@@ -99,38 +99,29 @@ function loadaudio(audiofile){
 }
 
 function next_file(next_or_prev){
-    // console.log(next_or_prev)
-    if(!window.confirm('go to next json? (saved check)')){
-        return
-    }
+    // if(!window.confirm('go to next json? (saved check)')){
+    //     return
+    // }
     if (next_or_prev == "next"){
-        if (current_file_idx+1 >= files.length){
+        if (current_file_idx+1 >= jsonfiles.length){
             current_file_idx = 0
         }else{
             current_file_idx = current_file_idx+1;
         }
     } else if (next_or_prev == "prev"){
         if (current_file_idx-1 < 0){
-            current_file_idx = files.length-1
+            current_file_idx = jsonfiles.length-1
         }else{
             current_file_idx = current_file_idx-1;
         }
     }
     
 
-    // reset seting
+    // reset settings
     document.getElementById("except_not_a_laugh").checked = false
     document.getElementById("except_by_laugh_by_oneself_prob").checked = false
 
-    console.log(files[current_file_idx])
-    basepath = files[current_file_idx].webkitRelativePath
-    basename = files[current_file_idx].name.slice(0,-5) //拡張し外す
-    // console.log(basename)
-    loadJson(basepath, basename)
-    // document.getElementById("file_done_ratio").innerText = (current_file_idx +1) + "/" + files.length +": " + files[current_file_idx].name
-    document.getElementById("laugh_done_ratio").innerText = (current_laughter +1) + "/" + Object.keys(laughters).length
-
-    
+    select(String(current_file_idx), 'json_dir')
 }
 
 function next_laughter(next_or_prev){
@@ -358,5 +349,5 @@ function select(idx, type){
         }
     }
     loadJson(idx)
-    
+    current_file_idx = Number(idx)
 }
