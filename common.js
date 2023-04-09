@@ -114,7 +114,6 @@ window.addEventListener("load", ()=>{
             //         }
             //     })
             // })
-            checking_word_elm.innerText = ""
             for (let i = 0; i < laughters["segments"].length; i++) {
                 words = laughters["segments"][i]["words"]
                 if (!words.length || words[words.length-1]["end"] < curr_time){
@@ -135,10 +134,13 @@ window.addEventListener("load", ()=>{
                             post_phrase += (words[post]["text"] ? words[post]["text"]: words[post]["word"])
                         }
                         post_checking_word_elm.innerText = post_phrase
-                        break;
+                        return;
                     }
                 }   
             }
+            pre_checking_word_elm.innerText = ""
+            checking_word_elm.innerText = "(空)"
+            post_checking_word_elm.innerText= ""
         });
         document.getElementById("json_files").focus()
     }    
