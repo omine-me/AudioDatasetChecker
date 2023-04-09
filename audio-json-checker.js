@@ -116,7 +116,7 @@ function next_file(next_or_prev){
     document.getElementById("except_not_a_laugh").checked = false
     document.getElementById("except_by_laugh_by_oneself_prob").checked = false
 
-    select(String(current_file_idx), 'json_dir')
+    select(String(current_file_idx), 'json')
 }
 
 function next_laughter(next_or_prev){
