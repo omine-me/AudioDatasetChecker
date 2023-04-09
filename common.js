@@ -1,10 +1,10 @@
 document.getElementById("json_files").addEventListener("change", ev => {
     jsonfiles = ev.target.files
-    show_dir(jsonfiles, "json_dir")
+    show_dir(jsonfiles, "json")
 });
 document.getElementById("audio_files").addEventListener("change", ev => {
     audiofiles = ev.target.files
-    show_dir(audiofiles, "audio_dir")
+    show_dir(audiofiles, "audio")
 });
 
 function loadaudio(audiofile){
@@ -26,15 +26,23 @@ function show_dir(files, type){
 }
 
 function select(idx, type){
-    const basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
-    for (let i = 0; i < audiofiles.length; i++) {
-        if (audiofiles[i]["name"].match(basename)){
-            loadaudio(audiofiles[i])
-            break;
+    if (type=="json"){
+        if (jsonfiles[idx]["name"].match("-")){
+            const basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
+        }else{
+            const basename = jsonfiles[idx]["name"].split(".")[0]
         }
+        for (let i = 0; i < audiofiles.length; i++) {
+            if (audiofiles[i]["name"].match(basename)){
+                loadaudio(audiofiles[i])
+                break;
+            }
+        }
+        loadJson(idx)
+        current_file_idx = Number(idx)
+    }else if(type=="audio"){
+        loadaudio(audiofiles[idx])
     }
-    loadJson(idx)
-    current_file_idx = Number(idx)
 }
 
 // 読み込み時にすること
@@ -108,7 +116,7 @@ window.addEventListener("load", ()=>{
 
             for (let i = 0; i < laughters["segments"].length; i++) {
                 words = laughters["segments"][i]["words"]
-                if (words[words.length-1]["end"] < curr_time){
+                if (!words.length || words[words.length-1]["end"] < curr_time){
                     continue;
                 }
                 for (let j = 0; j < words.length; j++) {
@@ -130,6 +138,7 @@ window.addEventListener("load", ()=>{
                     }
                 }   
             }
+            checking_word_elm.innerText = ""
         });
         document.getElementById("json_files").focus()
     }    
