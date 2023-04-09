@@ -93,11 +93,6 @@ function update_min_prob(){
     document.getElementById("min_prob_counter").innerText = document.getElementById("min_prob").value
 }
 
-function loadaudio(audiofile){
-    ori_audioElm.src =  URL.createObjectURL(audiofile);
-    document.getElementById("audio_file_name").innerText = audiofile["name"]
-}
-
 function next_file(next_or_prev){
     // if(!window.confirm('go to next json? (saved check)')){
     //     return
@@ -232,47 +227,6 @@ function playback_speed(gain){
     document.getElementById("play_speed").innerText = ori_audioElm.playbackRate
 }
 
-// 読み込み時にすること
-window.addEventListener("load", ()=>{
-
-    let audios = document.querySelectorAll(".audio");
-    ori_audioElm = audios[0]
-    mono_audioElm = audios[1]
-    console.log(audios)
-
-    // attr_html = ""
-    // attributes.forEach((attr)=>{
-    //     if (attr.type == "bool"){
-    //         attr_html += `<li><input id="${attr.name}" type="checkbox" class="checkbox" onclick='update_state("${attr.name}")'><label for="${attr.name}" class="attribute"><span>${attr.dis_name}</span></label><br></li>`
-    //     }else if (attr.type == "text" || attr.type == "float"){
-    //         attr_html += `<li><span>${attr.dis_name}</span><input id="${attr.name}" type="text" style="display: block;width: 100%;" onfocusout='update_state("${attr.name}")'></li>`
-    //     }
-    // })
-    // document.getElementById("attributes").innerHTML = attr_html
-
-    // attributes.forEach((attr)=>{
-    //     if (attr.type == "bool"){
-    //         document.getElementById(attr.name).checked = false
-    //     }else{            
-    //         document.getElementById(attr.name).value = ""
-    //     }
-    // })
-    document.getElementById("play_ori").checked = true
-    
-    audios.forEach(function(target) {
-        // console.log(laughters[0].start_sec)
-        target.addEventListener('timeupdate', function() {
-            curr_time = target.currentTime
-            if (laughters[current_laughter].start_sec < curr_time && curr_time < laughters[current_laughter].end_sec){
-                document.getElementsByTagName('body')[0].style.backgroundColor = "#f00" 
-            }else{
-                document.getElementsByTagName('body')[0].style.backgroundColor = "#fff" 
-            }
-        });
-    });
-    document.getElementById("json_files").focus()
-});
-
 document.addEventListener('keydown', event => {
     // if (event.ctrlKey && event.code === 'KeyD') {
     if (event.code.slice(0,-1) === 'Digit' || event.code.slice(0,-1) === 'Numpad') {
@@ -317,37 +271,3 @@ document.addEventListener('keydown', event => {
     }
     
 });
-
-document.getElementById("json_files").addEventListener("change", ev => {
-    jsonfiles = ev.target.files
-    show_dir(jsonfiles, "json_dir")
-});
-document.getElementById("audio_files").addEventListener("change", ev => {
-    audiofiles = ev.target.files
-    show_dir(audiofiles, "audio_dir")
-});
-
-function show_dir(files, type){
-    // console.log(files)
-    let figure = document.createElement("figure");
-    figure.innerHTML = ``;
-    for (let i = 0; i < files.length; i++) {
-        figure.innerHTML += `
-            <button onclick="select('${i}', '${type}')">${files[i].webkitRelativePath}</button><br/>
-            `;
-    }
-    document.getElementById(type).innerHTML='';
-    document.getElementById(type).insertBefore(figure, null);
-}
-
-function select(idx, type){
-    const basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
-    for (let i = 0; i < audiofiles.length; i++) {
-        if (audiofiles[i]["name"].match(basename)){
-            loadaudio(audiofiles[i])
-            break;
-        }
-    }
-    loadJson(idx)
-    current_file_idx = Number(idx)
-}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio-Json Dataset Checker</title>
+    <link type="text/css" rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="player_container">
+        <!-- <p id="original_audio_name"></p> -->
+        <div id="original_audio" class="player">Original
+            <audio controls src="" type="audio/wav" class="audio" id="ori_audio"></audio>
+        </div>
+        <!-- <p id="monoral_audio_name"></p> -->
+        <div id="monoral_audio">Monoral
+            <audio controls src="" type="audio/wav" class="audio"></audio>
+        </div>
+    </div>
+    <div class="controls_container">
+        <div id="dirs">
+            <div>json<input type="file" id="json_files" name="upfile[]" webkitdirectory /></div>
+            <div id="json_dir"></div>
+            <div>audio<input type="file" id="audio_files" name="upfile[]" webkitdirectory /></div>
+            <div id="audio_dir"></div>
+        </div>
+        <div id="controls" style="">
+            <div>
+                <!-- <div> json<input id="json_file" type="file" name="json_file"> audio<input id="audio_file" type="file" name="audio_file"></div> -->
+                
+                <div><span>Json File: </span><span id="json_file_name"></span></div>
+                <div><span>Audio File: </span><span id="audio_file_name"></span></div>
+                <div><span>Files: </span><span id="file_done_ratio"></span></div>
+                <div><span>Laughs: </span><span id="laugh_done_ratio"></span></div>
+                <div>Audio Source: 
+                    <label for="play_ori" onclick='changeSource("ori")'><input type="radio" id="play_ori" name="play_source" value="ori" checked>ori</label>
+                    <label for="play_mono" onclick='changeSource("mono")'><input type="radio" id="play_mono" name="play_source" value="mono">mono</label>
+                </div>
+                <div><span>Speed: </span><span id="play_speed">1.0</span></div>
+                <button id="previous_json" onclick="next_file('prev')">◀◀</button>
+                <button onclick="next_laughter('prev')">◀</button>
+                <button onclick="toggle_play()">||/▶</button>
+                <button onclick="next_laughter('')">🔄</button>
+                <button onclick="next_laughter('next')">▶</button>
+                <button id="next_json" onclick="next_file('next')">▶▶</button><br>
+
+                <span>start</span><input id="start_time" type="text"><br>
+                <span>end</span><input id="end_time" type="text"><br>
+                <hr>
+                
+                <ol id="attributes" style="margin: 0;">
+                    <!-- <li><input id="not_a_laugh" type="checkbox" class="checkbox" onclick='update_state("not_a_laugh")'><label for="not_a_laugh" class="attribute"><span>笑いでない</span></label><br></li>
+                    <li><input id="second_laugh" type="checkbox" class="checkbox" onclick='update_state("second_laugh")' disabled><label for="second_laugh" class="attribute"><span>二度目以降の笑い</span></label><br></li>
+                    <li><input id="talk_during_laugh" type="checkbox" class="checkbox" onclick='update_state("talk_during_laugh")' disabled><label for="talk_during_laugh" class="attribute"><span>喋りが挟まる</span></label><br></li>
+                    <li><input id="talker_not_divided" type="checkbox" class="checkbox" onclick='update_state("talker_not_divided")' disabled><label for="talker_not_divided" class="attribute"><span>左右混ざってる</span></label><br></li>
+                    <li><input id="laugh_length_error" type="checkbox" class="checkbox" onclick='update_state("laugh_length_error")'><label for="laugh_length_error" class="attribute"><span>笑い長さ変</span></label><br></li>
+                    <div style="margin: .5rem 0;"></div>
+                    <li><input id="tone" type="checkbox" class="checkbox" onclick='update_state("tone")' disabled><label for="tone" class="attribute"><span>トーン変化での笑い</span></label><br></li>
+                    <div style="display: flex;">
+                        <li><input id="infectious_laughter" type="checkbox" class="checkbox" onclick='update_state("infectious_laughter")' disabled><label for="infectious_laughter" class="attribute"><span>つられ笑い</span></label><br></li>　or　
+                        <li style="margin: 0 0 0 1rem;"><input id="laugh_by_oneself" type="checkbox" class="checkbox" onclick='update_state("laugh_by_oneself")'><label for="laugh_by_oneself" class="attribute"><span>自発語の影響で笑う</span></label><br></li>
+                    </div>
+                    <li><span>自発語確定度</span><input id="laugh_by_oneself_prob" type="text"><br></li>
+                    <li><span>その他のエラー</span><input id="other_error" type="text" class="checkbox" style="display: block;width: 100%;" onfocusout='update_state("other_error")'></li> -->
+                </ol>
+                
+                <hr>
+                <button><a id="save" onclick="saveJson()" download="" target=”_blank”>save</a></button>
+                <hr>
+                <div>
+                    <p style="margin-bottom: 0;">Andanced</p>
+                    <span id="play_from_n_sec_before_curr_val">2</span><span>秒前から再生</span><input id="play_from_n_sec_before" type="range" oninput="update_play_before()" min="0" max="10" step="1" value="2">
+                    <input id="except_by_laugh_by_oneself_prob" type="checkbox" class="checkbox"><label for="except_by_laugh_by_oneself_prob" class="attribute"><span>自発語確定度が低い笑いをスキップ</span></label>
+                    <input id="except_not_a_laugh" type="checkbox" class="checkbox"><label for="except_not_a_laugh" class="attribute"><span>笑いでないをスキップ</span></label>
+                    <li><span>min prob</span><input id="min_prob" oninput="update_min_prob()" type="range" min="0" max="1" step=".025" value=".8"><span id="min_prob_counter">0.8</span><br></li>
+                </div>
+            </div>
+        </div>
+        <div id="json_raw" contenteditable=""></div>
+    </div>
+</body>
+<script src="./audio-json-checker.js"></script>
+<script src="./common.js"></script>
+</html>

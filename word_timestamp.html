@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Word-wise Timestamp Checker</title>
+    <link type="text/css" rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="player_container">
+        <div id="original_audio" class="player">Original
+            <audio controls src="" type="audio/wav" class="audio" id="ori_audio"></audio>
+        </div>
+    </div>
+    <div class="controls_container">
+        <div id="dirs">
+            <div>json<input type="file" id="json_files" name="upfile[]" webkitdirectory /></div>
+            <div id="json_dir"></div>
+            <div>audio<input type="file" id="audio_files" name="upfile[]" webkitdirectory /></div>
+            <div id="audio_dir"></div>
+        </div>
+        <div id="controls">
+            <div><span>Json File: </span><span id="json_file_name"></span></div>
+            <div><span>Audio File: </span><span id="audio_file_name"></span></div>
+            <span class="word_around" id="pre_checking_word">pre</span>
+            <span id="checking_word">word</span>
+            <span class="word_around" id="post_checking_word">post</span>
+        </div>
+    </div>
+</body>
+<script src="./word_timestamp.js"></script>
+<script src="./common.js"></script>
+</html>

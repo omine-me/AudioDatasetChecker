@@ -7,7 +7,7 @@ html{
 }
 
 .controls_container{
-    justify-content: center;
+    justify-content: left;
     display: flex;
     align-items: start;
 }
@@ -46,4 +46,12 @@ input:disabled + label {
 figure{
     margin:0;
     white-space: nowrap;
+}
+
+#checking_word{
+    font-size: 5rem;
+}
+
+.word_around{
+    font-size: 1.2rem;
 }
