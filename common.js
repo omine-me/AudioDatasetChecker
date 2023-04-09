@@ -27,10 +27,11 @@ function show_dir(files, type){
 
 function select(idx, type){
     if (type=="json"){
-        if (jsonfiles[idx]["name"].match("-")){
-            const basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
+        let basename;
+        if (!!jsonfiles[idx]["name"].match("-")){
+            basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
         }else{
-            const basename = jsonfiles[idx]["name"].split(".")[0]
+            basename = jsonfiles[idx]["name"].split(".")[0]
         }
         for (let i = 0; i < audiofiles.length; i++) {
             if (audiofiles[i]["name"].match(basename)){
@@ -113,7 +114,7 @@ window.addEventListener("load", ()=>{
             //         }
             //     })
             // })
-
+            checking_word_elm.innerText = ""
             for (let i = 0; i < laughters["segments"].length; i++) {
                 words = laughters["segments"][i]["words"]
                 if (!words.length || words[words.length-1]["end"] < curr_time){
@@ -138,7 +139,6 @@ window.addEventListener("load", ()=>{
                     }
                 }   
             }
-            checking_word_elm.innerText = ""
         });
         document.getElementById("json_files").focus()
     }    
