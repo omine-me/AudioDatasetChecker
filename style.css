@@ -37,6 +37,9 @@ input:disabled + label {
     background-color: #646464;
     text-decoration: line-through;
 }
+#controls{
+    display: table;
+}
 #dirs{
     width: 30%;
     overflow: scroll;
@@ -49,7 +52,9 @@ figure{
 }
 
 #checking_word{
-    font-size: 5rem;
+    /* font-size: 5rem; */
+    font-size: 1.2rem;
+    color: red;
 }
 
 .word_around{
