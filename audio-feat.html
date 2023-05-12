@@ -1,0 +1,30 @@
+<body>
+<div>
+    <canvas class="canvas" width="640" height="480"></canvas>
+</div>
+<div>
+    <audio class="audio" controls>
+    </audio>
+</div>
+<div>
+    FFT Size:
+    <select class="fft-size">
+        <option value="512">512</option>
+        <option value="1024">1024</option>
+        <option value="2048" selected>2048</option>
+        <option value="4096">4096</option>
+        <option value="8192">8192</option>
+    </select>
+</div>
+<div>
+    Min. decibels: 
+    <input class="min-decibels" type="range" min="-120" max="0" value="-100" step="1">
+    <span class="min-decibels-span">-100</span>
+</div>
+<div>
+    Max. decibels: 
+    <input class="max-decibels" type="range" min="-120" max="0" value="-30" step="1">
+    <span class="max-decibels-span">-30</span>
+</div>
+<script src="./audio-feat-visual.js"></script>
+</body>

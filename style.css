@@ -43,7 +43,7 @@ input:disabled + label {
 #dirs{
     width: 30%;
     overflow: scroll;
-    resize: auto;
+    resize: both;
     height: 30rem;
 }
 figure{

@@ -27,17 +27,17 @@ function show_dir(files, type){
 
 function select(idx, type){
     if (type=="json"){
-        let basename;
-        if (!!jsonfiles[idx]["name"].match("-")){
-            basename = jsonfiles[idx]["name"].split("-")[1].split(".")[0]
-        }else{
-            basename = jsonfiles[idx]["name"].split(".")[0]
-        }
+        let basename = jsonfiles[idx]["name"].split(".")[0]
+        let audio_found = false;
         for (let i = 0; i < audiofiles.length; i++) {
-            if (audiofiles[i]["name"].match(basename)){
+            if (audiofiles[i]["name"].match(basename.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'))){
                 loadaudio(audiofiles[i])
+                audio_found = true;
                 break;
             }
+        }
+        if (!audio_found){
+            alert("no audio found like", basename);
         }
         loadJson(idx)
         current_file_idx = Number(idx)
