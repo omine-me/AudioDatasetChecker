@@ -28,22 +28,27 @@ const attributes = [
 const laugh_by_oneself_prob_thre = 0.45
 
 function formatJSON(){
-    document.getElementById("json_raw").innerText = JSON.stringify(laughters[current_laughter], null, "　");
+    const json_div = document.getElementById("json_raw");
+    json_div.innerText = JSON.stringify(laughters[current_laughter], null, "　");
+    json_div.classList.add("flash");
+    setTimeout(function() {
+        json_div.classList.remove('flash');
+    }, 50);
 }
 
 function saveJson(){
-    not_fulfilled_indexes = []
-    for(let i=0;i < Object.keys(laughters).length; i++){
-        attributes.forEach((attr)=>{
-            if (!laughters[i].hasOwnProperty(attr.name)){
-                not_fulfilled_indexes.push(i)
-            }
-        })
-    }
-    console.log(not_fulfilled_indexes)
-    if (not_fulfilled_indexes.length){
-        alert([...new Set(not_fulfilled_indexes)])
-    }else{
+    // not_fulfilled_indexes = []
+    // for(let i=0;i < Object.keys(laughters).length; i++){
+    //     attributes.forEach((attr)=>{
+    //         if (!laughters[i].hasOwnProperty(attr.name)){
+    //             not_fulfilled_indexes.push(i)
+    //         }
+    //     })
+    // }
+    // console.log(not_fulfilled_indexes)
+    // if (not_fulfilled_indexes.length){
+    //     alert([...new Set(not_fulfilled_indexes)])
+    // }else{
         // JSON ファイルを表す Blob オブジェクトを生成
         const json = JSON.stringify(laughters);
         const blob = new Blob([json], { type: 'application/json' });
@@ -51,9 +56,9 @@ function saveJson(){
         // a 要素の href 属性に Object URL を セット
         document.getElementById("save").href = window.URL.createObjectURL(blob);
         // window.open(window.URL.createObjectURL(blob), '_blank')
-        document.getElementById("save").download = files[current_file_idx].name
+        document.getElementById("save").download = jsonfiles[current_file_idx].name
         // document.getElementById("save").click()
-    }
+    // }
 }
 
 async function loadJson(idx){
@@ -65,8 +70,8 @@ async function loadJson(idx){
             formatJSON();
             current_laughter = 0
             // console.log(laughters)
-            document.getElementById("start_time").value = laughters[current_laughter].start_sec
-            document.getElementById("end_time").value = laughters[current_laughter].end_sec
+            document.getElementById("start_sec").value = laughters[current_laughter].start_sec
+            document.getElementById("end_sec").value = laughters[current_laughter].end_sec
             // loadaudio(basename)
             document.getElementById("json_file_name").innerText = jsonfiles[idx]["name"]
             next_laughter('')
@@ -76,13 +81,7 @@ async function loadJson(idx){
 
 
 function update_state(elm_name){
-    if (elm_name == "other_error"){
-        laughters[current_laughter][elm_name] = document.getElementById(elm_name).value
-    }else if (elm_name == "laugh_by_oneself_prob"){
-        alert("update not available")
-    }else{
-        laughters[current_laughter][elm_name] = document.getElementById(elm_name).checked;
-    }
+    laughters[current_laughter][elm_name] = Number(document.getElementById(elm_name).value)
     formatJSON()
 }
 
@@ -150,8 +149,8 @@ function next_laughter(next_or_prev){
             }
         }
     }
-    document.getElementById("start_time").value = laughters[current_laughter].start_sec
-    document.getElementById("end_time").value = laughters[current_laughter].end_sec
+    document.getElementById("start_sec").value = laughters[current_laughter].start_sec
+    document.getElementById("end_sec").value = laughters[current_laughter].end_sec
     // console.log(laughters[0])
     // attributes.forEach((attr)=>{
     //     if (laughters[current_laughter].hasOwnProperty(attr.name)){
@@ -229,12 +228,13 @@ function playback_speed(gain){
 
 document.addEventListener('keydown', event => {
     // if (event.ctrlKey && event.code === 'KeyD') {
-    if (event.code.slice(0,-1) === 'Digit' || event.code.slice(0,-1) === 'Numpad') {
-        idx = Number(event.code.slice(-1,))-1
-        document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
-        update_state(attributes[idx].name)
-        event.preventDefault();
-    }else if (event.code === 'KeyQ') {
+    // if (event.code.slice(0,-1) === 'Digit' || event.code.slice(0,-1) === 'Numpad') {
+    //     idx = Number(event.code.slice(-1,))-1
+    //     document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
+    //     update_state(attributes[idx].name)
+    //     event.preventDefault();
+    // }else 
+    if (event.code === 'KeyQ') {
         next_file('prev')
         event.preventDefault();
     }else if (event.code === 'KeyW') {

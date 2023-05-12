@@ -43,8 +43,8 @@
                 <button onclick="next_laughter('next')">▶</button>
                 <button id="next_json" onclick="next_file('next')">▶▶</button><br>
 
-                <span>start</span><input id="start_time" type="text"><br>
-                <span>end</span><input id="end_time" type="text"><br>
+                <span>start</span><input id="start_sec" type="number" onblur="update_state('start_sec');"><br>
+                <span>end</span><input id="end_sec" type="number" onblur="update_state('end_sec');"><br>
                 <hr>
                 
                 <ol id="attributes" style="margin: 0;">
