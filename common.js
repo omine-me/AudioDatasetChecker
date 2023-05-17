@@ -72,16 +72,35 @@ window.addEventListener("load", ()=>{
         //     }
         // })
         document.getElementById("play_ori").checked = true
-        
+        const channel = new BroadcastChannel('app-data');
+        ori_audioElm.addEventListener('loadedmetadata', function (e) {
+            var time = ori_audioElm.currentTime;
+            requestAnimationFrame(function me () {
+                if (time !== ori_audioElm.currentTime) {
+                    time = ori_audioElm.currentTime;
+                    ori_audioElm.dispatchEvent(new CustomEvent("timeupdate"));
+                }
+                requestAnimationFrame(me);
+            });
+        })
         audios.forEach(function(target) {
             // console.log(laughters[0].start_sec)
             target.addEventListener('timeupdate', function() {
                 curr_time = target.currentTime
+                channel.postMessage({"play": true, "time": curr_time});
                 if (laughters[current_laughter].start_sec < curr_time && curr_time < laughters[current_laughter].end_sec){
+                    if (document.getElementById("pause_at_laughter_start").checked){
+                        ori_audioElm.pause()
+                    }
                     document.getElementsByTagName('body')[0].style.backgroundColor = "#f00" 
                 }else{
                     document.getElementsByTagName('body')[0].style.backgroundColor = "#fff" 
                 }
+            });
+            target.addEventListener('pause', function() {
+                setTimeout(()=>{
+                    channel.postMessage({"play": false, "time": target.currentTime});
+                }, 250)
             });
         });
         document.getElementById("json_files").focus()
@@ -90,6 +109,16 @@ window.addEventListener("load", ()=>{
         ori_audioElm = audios[0]
         
         _tmp_count = 0
+        const channel = new BroadcastChannel('app-data');
+        channel.addEventListener ('message', (event) => {
+            // console.log(event.data)
+            if (event.data["play"]){
+                ori_audioElm.play()
+            }else{
+                ori_audioElm.pause()
+            }
+            ori_audioElm.currentTime= event.data["time"]
+        });
         ori_audioElm.addEventListener('loadedmetadata', function (e) {
             var time = ori_audioElm.currentTime;
             requestAnimationFrame(function me () {
