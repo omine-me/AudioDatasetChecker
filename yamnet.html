@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head>
+    <title>Yamnet Checker</title>
+    <meta charset="utf-8"/>
+    <link type="text/css" rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="controls_container">
+        <div id="dirs">
+            <div>Yamnet<input type="file" id="yamnet_files" name="upfile[]" webkitdirectory autofocus/></div>
+            <p id="yamnet"></p>
+        </div>
+        <div id="controls" style="position: relative;">
+            <div><span>Yamnet File: </span><span id="yamnet_file_name"></span></div>
+            <div>Time: <span id="curr_time"></span></div>
+
+            <p>laughter: <span id="yamnet_laughter"></span></p>
+            <div class="value_bar" id="laughter_bar"></div>
+
+            <p>giggle: <span id="yamnet_giggle"></span></p>
+            <div class="value_bar" id="giggle_bar"></div>
+
+            <p>snicker: <span id="yamnet_snicker"></span></p>
+            <div class="value_bar" id="snicker_bar"></div>
+
+            <p>belly laugh: <span id="yamnet_belly_laugh"></span></p>
+            <div class="value_bar" id="belly_laugh_bar"></div>
+
+            <p>chuckle: <span id="yamnet_chuckle"></span></p>
+            <div class="value_bar" id="chuckle_bar"></div>
+            <span>threshold %</span><input id="yamnet_threshold" oninput="update_yamnet_threshold()" type="range" min="0" max="100" step=".25" value="5"><span id="yamnet_threshold_value">5%</span>
+            <div class="thres_line" id="thres_line"></div>
+        </div>
+    </div>
+
+<script src="yamnet.js"  type="module"></script>
+<script src="./common.js" charset="utf-8"></script>
+</body></html>

@@ -19,10 +19,10 @@ let play_source = "ori"
 //                     ]
 const attributes = [
     {"name": "not_a_laugh", "type": "bool", "dis_name": "笑いでない"},
-    {"name": "laugh_length_error" , "type": "bool", "dis_name": "笑い長さ変"},
-    {"name": "laugh_by_oneself" , "type": "bool", "dis_name": "自発語の影響で笑う"},
-    {"name": "laugh_by_oneself_prob" , "type": "float", "dis_name": "自発語確定度"},
-    {"name": "other_error", "type": "text", "dis_name": "その他のエラー"}
+    // {"name": "laugh_length_error" , "type": "bool", "dis_name": "笑い長さ変"},
+    // {"name": "laugh_by_oneself" , "type": "bool", "dis_name": "自発語の影響で笑う"},
+    // {"name": "laugh_by_oneself_prob" , "type": "float", "dis_name": "自発語確定度"},
+    // {"name": "other_error", "type": "text", "dis_name": "その他のエラー"}
 ]
                     
 const laugh_by_oneself_prob_thre = 0.45
@@ -80,8 +80,19 @@ async function loadJson(idx){
 }
 
 
-function update_state(elm_name){
-    laughters[current_laughter][elm_name] = Number(document.getElementById(elm_name).value)
+function update_state(elm_name, offset){
+    let elm = document.getElementById(elm_name)
+    if(elm.type == "number"){
+        if (offset){
+            elm.value = parseFloat((Number(elm.value) + offset).toFixed(4))
+        }
+        laughters[current_laughter][elm_name] = Number(elm.value)
+    }else if(elm.type == "checkbox"){
+        laughters[current_laughter][elm_name] = elm.checked;
+    }else{
+        alert("Not implemented yet.")
+    }
+    
     formatJSON()
 }
 
@@ -152,27 +163,24 @@ function next_laughter(next_or_prev){
     document.getElementById("start_sec").value = laughters[current_laughter].start_sec
     document.getElementById("end_sec").value = laughters[current_laughter].end_sec
     // console.log(laughters[0])
-    // attributes.forEach((attr)=>{
-    //     if (laughters[current_laughter].hasOwnProperty(attr.name)){
-    //         if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
-    //             document.getElementById(attr.name).value = laughters[current_laughter][attr.name]
-    //         }else{
-    //             document.getElementById(attr.name).checked = laughters[current_laughter][attr.name]
-    //         }
-    //     }else {
-    //         if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
-    //             // console.log(attr.name)
-    //             document.getElementById(attr.name).value = ""
-    //             // console.log(document.getElementById(attr.name).value)
-    //             laughters[current_laughter][attr.name] = ""
-    //             // console.log(laughters[current_laughter][attr.attr.name])
-    //         }else{
-    //             document.getElementById(attr.name).checked = false
-    //             laughters[current_laughter][attr.name] = false
-    //         }
+    attributes.forEach((attr)=>{
+        if (laughters[current_laughter].hasOwnProperty(attr.name)){
+            if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
+                document.getElementById(attr.name).value = laughters[current_laughter][attr.name]
+            }else{
+                document.getElementById(attr.name).checked = laughters[current_laughter][attr.name]
+            }
+        }else {
+            if (attr.name == "other_error" || attr.name == "laugh_by_oneself_prob"){
+                document.getElementById(attr.name).value = ""
+                // laughters[current_laughter][attr.name] = ""
+            }else{
+                document.getElementById(attr.name).checked = false
+                // laughters[current_laughter][attr.name] = false
+            }
             
-    //     }
-    // })
+        }
+    })
     let play_from_n_sec_before = document.getElementById("play_from_n_sec_before").value
     ori_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
     mono_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
@@ -224,6 +232,10 @@ function playback_speed(gain){
         mono_audioElm.playbackRate += gain
     }
     document.getElementById("play_speed").innerText = ori_audioElm.playbackRate
+}
+
+function toggle_share_current_state(){
+    share_current_state_to_other_tabs = !share_current_state_to_other_tabs;
 }
 
 document.addEventListener('keydown', event => {

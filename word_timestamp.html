@@ -21,6 +21,10 @@
         <div id="controls">
             <div><span>Json File: </span><span id="json_file_name"></span></div>
             <div><span>Audio File: </span><span id="audio_file_name"></span></div>
+            <div>Lang: 
+                <label for="lang_ja" onclick='changeLang("ja")'><input type="radio" id="lang_ja" name="lang" value="ja" checked>ja</label>
+                <label for="lang_en" onclick='changeLang("en")'><input type="radio" id="lang_en" name="lang" value="en">en</label>
+            </div>
             <span class="word_around" id="pre_checking_word">pre</span>
             <span id="checking_word">word</span>
             <span class="word_around" id="post_checking_word">post</span>

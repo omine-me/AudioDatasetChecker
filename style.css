@@ -54,7 +54,7 @@ figure{
 #checking_word{
     /* font-size: 5rem; */
     font-size: 1.2rem;
-    color: red;
+    background: gray;
 }
 
 .word_around{
@@ -63,4 +63,36 @@ figure{
 
 .flash{
     background-color:#e1c171;
+}
+
+.speaker1{
+    color: red;
+}
+.speaker2{
+    color: green;
+}
+.speaker3{
+    color: blue;
+}
+.speaker4{
+    color: purple;
+}
+.speaker5{
+    color: pink;
+}
+
+.value_bar{
+    height: 1rem;
+    background-color: red;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.thres_line{
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    top: 0;
+    left: 5%;
+    background: blue;
 }

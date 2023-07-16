@@ -43,13 +43,21 @@
                 <button onclick="next_laughter('next')">▶</button>
                 <button id="next_json" onclick="next_file('next')">▶▶</button><br>
 
-                <span>start</span><input id="start_sec" type="number" onblur="update_state('start_sec');"><br>
-                <span>end</span><input id="end_sec" type="number" onblur="update_state('end_sec');"><br>
+                <span>start</span><input id="start_sec" type="number" onblur="update_state('start_sec');">
+                    <button onclick="update_state('start_sec', -1)">-1</button>
+                    <button onclick="update_state('start_sec', -0.1)">-0.1</button>
+                    <button onclick="update_state('start_sec', 0.1)">+0.1</button>
+                    <button onclick="update_state('start_sec', 1)">+1</button><br>
+                <span>end</span><input id="end_sec" type="number" onblur="update_state('end_sec');">
+                    <button onclick="update_state('end_sec', -1)">-1</button>
+                    <button onclick="update_state('end_sec', -0.1)">-0.1</button>
+                    <button onclick="update_state('end_sec', 0.1)">+0.1</button>
+                    <button onclick="update_state('end_sec', 1)">+1</button><br>
                 <hr>
                 
                 <ol id="attributes" style="margin: 0;">
-                    <!-- <li><input id="not_a_laugh" type="checkbox" class="checkbox" onclick='update_state("not_a_laugh")'><label for="not_a_laugh" class="attribute"><span>笑いでない</span></label><br></li>
-                    <li><input id="second_laugh" type="checkbox" class="checkbox" onclick='update_state("second_laugh")' disabled><label for="second_laugh" class="attribute"><span>二度目以降の笑い</span></label><br></li>
+                    <li><input id="not_a_laugh" type="checkbox" class="checkbox" onclick='update_state("not_a_laugh")'><label for="not_a_laugh" class="attribute"><span>笑いでない</span></label><br></li>
+                    <!-- <li><input id="second_laugh" type="checkbox" class="checkbox" onclick='update_state("second_laugh")' disabled><label for="second_laugh" class="attribute"><span>二度目以降の笑い</span></label><br></li>
                     <li><input id="talk_during_laugh" type="checkbox" class="checkbox" onclick='update_state("talk_during_laugh")' disabled><label for="talk_during_laugh" class="attribute"><span>喋りが挟まる</span></label><br></li>
                     <li><input id="talker_not_divided" type="checkbox" class="checkbox" onclick='update_state("talker_not_divided")' disabled><label for="talker_not_divided" class="attribute"><span>左右混ざってる</span></label><br></li>
                     <li><input id="laugh_length_error" type="checkbox" class="checkbox" onclick='update_state("laugh_length_error")'><label for="laugh_length_error" class="attribute"><span>笑い長さ変</span></label><br></li>
@@ -72,6 +80,7 @@
                     <input id="except_by_laugh_by_oneself_prob" type="checkbox" class="checkbox"><label for="except_by_laugh_by_oneself_prob" class="attribute"><span>自発語確定度が低い笑いをスキップ</span></label>
                     <input id="except_not_a_laugh" type="checkbox" class="checkbox"><label for="except_not_a_laugh" class="attribute"><span>笑いでないをスキップ</span></label>
                     <input id="pause_at_laughter_start" type="checkbox" class="checkbox"><label for="pause_at_laughter_start" class="attribute"><span>笑いの前で停止</span></label>
+                    <input id="share_other_tabs" type="checkbox" class="checkbox" onchange="toggle_share_current_state()" checked><label for="share_other_tabs" class="attribute"><span>他のタブに同期</span></label>
                     <li><span>min prob</span><input id="min_prob" oninput="update_min_prob()" type="range" min="0" max="1" step=".025" value=".8"><span id="min_prob_counter">0.8</span><br></li>
                 </div>
             </div>

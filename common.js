@@ -1,3 +1,5 @@
+let share_current_state_to_other_tabs = true;
+
 document.getElementById("json_files").addEventListener("change", ev => {
     jsonfiles = ev.target.files
     show_dir(jsonfiles, "json")
@@ -43,6 +45,8 @@ function select(idx, type){
         current_file_idx = Number(idx)
     }else if(type=="audio"){
         loadaudio(audiofiles[idx])
+    }else if(type=="yamnet"){
+        loadyamnet(idx)
     }
 }
 
@@ -87,7 +91,9 @@ window.addEventListener("load", ()=>{
             // console.log(laughters[0].start_sec)
             target.addEventListener('timeupdate', function() {
                 curr_time = target.currentTime
-                channel.postMessage({"play": true, "time": curr_time});
+                if (share_current_state_to_other_tabs){
+                    channel.postMessage({"play": true, "time": curr_time});
+                }
                 if (laughters[current_laughter].start_sec < curr_time && curr_time < laughters[current_laughter].end_sec){
                     if (document.getElementById("pause_at_laughter_start").checked){
                         ori_audioElm.pause()
@@ -143,26 +149,70 @@ window.addEventListener("load", ()=>{
             //         }
             //     })
             // })
-            for (let i = 0; i < laughters["segments"].length; i++) {
-                words = laughters["segments"][i]["words"]
-                if (!words.length || words[words.length-1]["end"] < curr_time){
-                    continue;
+            if (lang=="ja"){
+                for (let i = 0; i < laughters["segments"].length; i++) {
+                    words = laughters["segments"][i]["words"]
+                    if (!words.length || words[words.length-1]["end"] < curr_time){
+                        continue;
+                    }
+                    for (let j = 0; j < words.length; j++) {
+                        word = words[j]
+                        if (word["start"] < curr_time && curr_time < word["end"]){
+                            checking_word_elm.innerText = (word["text"] ? word["text"]: word["word"]);
+
+                            pre_phrase = ""
+                            for (let pre = 0; pre < j; pre++) {
+                                pre_phrase += (words[pre]["text"] ? words[pre]["text"]: words[pre]["word"])
+                            }
+                            pre_checking_word_elm.innerText= pre_phrase
+                            post_phrase = ""
+                            for (let post = j+1; post < words.length; post++) {
+                                post_phrase += (words[post]["text"] ? words[post]["text"]: words[post]["word"])
+                            }
+                            post_checking_word_elm.innerText = post_phrase
+                            return;
+                        }
+                    }   
                 }
+            } else if(lang=="en"){
+                words = laughters["results"][Object.keys(laughters["results"]).length-1]["alternatives"][0]["words"]
                 for (let j = 0; j < words.length; j++) {
                     word = words[j]
-                    if (word["start"] < curr_time && curr_time < word["end"]){
-                        checking_word_elm.innerText = (word["text"] ? word["text"]: word["word"]);
+                    if (Number(word["startTime"].slice(0,-1)) < curr_time && curr_time < Number(word["endTime"].slice(0,-1))){
+                        checking_word_elm.innerText = word["word"];
 
                         pre_phrase = ""
-                        for (let pre = 0; pre < j; pre++) {
-                            pre_phrase += (words[pre]["text"] ? words[pre]["text"]: words[pre]["word"])
+                        // pre_checking_word_elm.innerText = ""
+                        pre_checking_word_elm.innerHTML = ""; 
+
+                        for (let pre = j-1; j-40 < pre; pre--) {
+                            if (!!words[pre]["word"].match("\\.")){
+                                break;
+                            }
+                            // pre_phrase = words[pre]["word"] + " " + pre_phrase
+                            let new_word = document.createElement('span')
+                            new_word.textContent = words[pre]["word"] + " "
+                            new_word.classList.add("speaker" + words[pre]["speakerTag"]);
+                            pre_checking_word_elm.insertBefore(new_word, pre_checking_word_elm.firstChild)
                         }
-                        pre_checking_word_elm.innerText= pre_phrase
+                        // pre_checking_word_elm.innerText= pre_phrase
+
+
                         post_phrase = ""
-                        for (let post = j+1; post < words.length; post++) {
-                            post_phrase += (words[post]["text"] ? words[post]["text"]: words[post]["word"])
+                        // post_checking_word_elm.innerText = ""
+                        post_checking_word_elm.innerHTML = ""
+
+                        for (let post = j+1; post < j+40; post++) {
+                            // post_phrase += " " + words[post]["word"]
+                            let new_word = document.createElement('span')
+                            new_word.textContent = " " + words[post]["word"]
+                            new_word.classList.add("speaker" + words[post]["speakerTag"]);
+                            post_checking_word_elm.appendChild(new_word)
+                            if (!!words[post]["word"].match("\\.")){
+                                break;
+                            }
                         }
-                        post_checking_word_elm.innerText = post_phrase
+                        // post_checking_word_elm.innerText = post_phrase
                         return;
                     }
                 }   

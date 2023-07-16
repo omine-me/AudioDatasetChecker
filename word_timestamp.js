@@ -1,3 +1,4 @@
+let lang = "en"
 let jsonfiles = []
 let audiofiles = []
 let current_file_idx = 0
@@ -18,4 +19,8 @@ async function loadJson(idx){
             document.getElementById("json_file_name").innerText = jsonfiles[idx]["name"]
         })
         .catch(data=>alert("Error occured while loading json or audio"));    
+}
+
+function changeLang(lang_chenged){
+    lang = lang_chenged;
 }
