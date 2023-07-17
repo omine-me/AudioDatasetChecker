@@ -76,10 +76,11 @@
                 <hr>
                 <div>
                     <p style="margin-bottom: 0;">Andanced</p>
-                    <span id="play_from_n_sec_before_curr_val">2</span><span>秒前から再生</span><input id="play_from_n_sec_before" type="range" oninput="update_play_before()" min="0" max="10" step="1" value="2">
+                    <span id="play_from_n_sec_before_curr_val">2</span><span>秒前から再生</span><input id="play_from_n_sec_before" class="attribute" type="range" oninput="update_play_before()" min="0" max="10" step="1" value="2">
+                    <input id="pause_at_laughter_start" type="checkbox" class="checkbox"><label for="pause_at_laughter_start" class="attribute"><span>笑いの前で停止</span></label>
+                    <input id="pause_at_laughter_end" type="checkbox" class="checkbox"><label for="pause_at_laughter_end" class="attribute"><span>笑いの後で停止</span></label>
                     <input id="except_by_laugh_by_oneself_prob" type="checkbox" class="checkbox"><label for="except_by_laugh_by_oneself_prob" class="attribute"><span>自発語確定度が低い笑いをスキップ</span></label>
                     <input id="except_not_a_laugh" type="checkbox" class="checkbox"><label for="except_not_a_laugh" class="attribute"><span>笑いでないをスキップ</span></label>
-                    <input id="pause_at_laughter_start" type="checkbox" class="checkbox"><label for="pause_at_laughter_start" class="attribute"><span>笑いの前で停止</span></label>
                     <input id="share_other_tabs" type="checkbox" class="checkbox" onchange="toggle_share_current_state()" checked><label for="share_other_tabs" class="attribute"><span>他のタブに同期</span></label>
                     <li><span>min prob</span><input id="min_prob" oninput="update_min_prob()" type="range" min="0" max="1" step=".025" value=".8"><span id="min_prob_counter">0.8</span><br></li>
                 </div>

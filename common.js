@@ -100,6 +100,9 @@ window.addEventListener("load", ()=>{
                     }
                     document.getElementsByTagName('body')[0].style.backgroundColor = "#f00" 
                 }else{
+                    if (document.getElementById("pause_at_laughter_end").checked && laughters[current_laughter].end_sec < curr_time){
+                        ori_audioElm.pause()
+                    }
                     document.getElementsByTagName('body')[0].style.backgroundColor = "#fff" 
                 }
             });
