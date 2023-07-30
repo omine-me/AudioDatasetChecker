@@ -14,20 +14,30 @@
             <div><span>Yamnet File: </span><span id="yamnet_file_name"></span></div>
             <div>Time: <span id="curr_time"></span></div>
 
-            <p>laughter: <span id="yamnet_laughter"></span></p>
-            <div class="value_bar" id="laughter_bar"></div>
+            <p class="yamnet_category">laughter: <span id="yamnet_laughter"></span></p>
+            <div class="value_bar_laugh" id="laughter_bar"></div>
 
-            <p>giggle: <span id="yamnet_giggle"></span></p>
-            <div class="value_bar" id="giggle_bar"></div>
+            <p class="yamnet_category">speech: <span id="yamnet_speech"></span></p>
+            <div class="value_bar_speech" id="speech_bar"></div>
 
-            <p>snicker: <span id="yamnet_snicker"></span></p>
-            <div class="value_bar" id="snicker_bar"></div>
+            <p class="yamnet_category">giggle: <span id="yamnet_giggle"></span></p>
+            <div class="value_bar_laugh" id="giggle_bar"></div>
 
-            <p>belly laugh: <span id="yamnet_belly_laugh"></span></p>
-            <div class="value_bar" id="belly_laugh_bar"></div>
+            <p class="yamnet_category">snicker: <span id="yamnet_snicker"></span></p>
+            <div class="value_bar_laugh" id="snicker_bar"></div>
 
-            <p>chuckle: <span id="yamnet_chuckle"></span></p>
-            <div class="value_bar" id="chuckle_bar"></div>
+            <p class="yamnet_category">belly laugh: <span id="yamnet_belly_laugh"></span></p>
+            <div class="value_bar_laugh" id="belly_laugh_bar"></div>
+
+            <p class="yamnet_category">chuckle: <span id="yamnet_chuckle"></span></p>
+            <div class="value_bar_laugh" id="chuckle_bar"></div>
+
+            <p class="yamnet_category">conversation: <span id="yamnet_conversation"></span></p>
+            <div class="value_bar_speech" id="convesation_bar"></div>
+
+            <p class="yamnet_category">narration: <span id="yamnet_narration"></span></p>
+            <div class="value_bar_speech" id="narration_bar"></div>
+
             <span>threshold %</span><input id="yamnet_threshold" oninput="update_yamnet_threshold()" type="range" min="0" max="100" step=".25" value="5"><span id="yamnet_threshold_value">5%</span>
             <div class="thres_line" id="thres_line"></div>
         </div>

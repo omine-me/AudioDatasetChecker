@@ -86,11 +86,21 @@ figure{
     color: pink;
 }
 
-.value_bar{
+.value_bar_laugh{
     height: 1rem;
     background-color: red;
     transition-duration: .2s;
     transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+.value_bar_speech{
+    height: 1rem;
+    background-color: greenyellow;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1);
+}
+
+.yamnet_category{
+    margin-bottom: 0;
 }
 
 .thres_line{
