@@ -78,7 +78,12 @@ document.getElementById('max-decibels').onchange = function (event) {
     document.getElementById('max-decibels-span').textContent = event.target.value;
 };
 
-// ---------- 関数 ----------
+
+
+
+
+
+// ---------- スペクトログラム系 ----------
 
 /**
  * スペクトログラムの更新開始

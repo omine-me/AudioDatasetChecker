@@ -28,6 +28,9 @@ function show_dir(files, type){
 }
 
 function select(idx, type){
+    if(!window.confirm('Open other ' +type+ '? (saved check)')){
+        return
+    }
     if (type=="json"){
         let basename = jsonfiles[idx]["name"].split(".")[0]
         let audio_found = false;
@@ -61,9 +64,9 @@ window.addEventListener("load", ()=>{
         // attr_html = ""
         // attributes.forEach((attr)=>{
         //     if (attr.type == "bool"){
-        //         attr_html += `<li><input id="${attr.name}" type="checkbox" class="checkbox" onclick='update_state("${attr.name}")'><label for="${attr.name}" class="attribute"><span>${attr.dis_name}</span></label><br></li>`
+        //         attr_html += `<li><input id="${attr.name}" type="checkbox" class="checkbox" onclick='update_state(offset="${attr.name}")'><label for="${attr.name}" class="attribute"><span>${attr.dis_name}</span></label><br></li>`
         //     }else if (attr.type == "text" || attr.type == "float"){
-        //         attr_html += `<li><span>${attr.dis_name}</span><input id="${attr.name}" type="text" style="display: block;width: 100%;" onfocusout='update_state("${attr.name}")'></li>`
+        //         attr_html += `<li><span>${attr.dis_name}</span><input id="${attr.name}" type="text" style="display: block;width: 100%;" onfocusout='update_state(offset="${attr.name}")'></li>`
         //     }
         // })
         // document.getElementById("attributes").innerHTML = attr_html
@@ -94,6 +97,7 @@ window.addEventListener("load", ()=>{
                 if (share_current_state_to_other_tabs){
                     channel.postMessage({"play": true, "time": curr_time});
                 }
+                show_current_bar_in_waveform()
                 if (laughters[current_laughter].start_sec < curr_time && curr_time < laughters[current_laughter].end_sec){
                     if (document.getElementById("pause_at_laughter_start").checked){
                         ori_audioElm.pause()
@@ -103,8 +107,8 @@ window.addEventListener("load", ()=>{
                     if (document.getElementById("pause_at_laughter_end").checked && laughters[current_laughter].end_sec < curr_time){
                         ori_audioElm.pause()
                     }
-                    document.getElementsByTagName('body')[0].style.backgroundColor = "#fff" 
-                }
+                    document.getElementsByTagName('body')[0].style.backgroundColor = "#333" 
+                }                
             });
             target.addEventListener('pause', function() {
                 setTimeout(()=>{
@@ -227,3 +231,10 @@ window.addEventListener("load", ()=>{
         document.getElementById("json_files").focus()
     }    
 });
+
+window.addEventListener('beforeunload', (e) => {
+  const message = '入力内容が保存されない可能性があります。ページを離れますか？'
+    e.preventDefault()
+    e.returnValue = message
+    return message
+})

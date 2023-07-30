@@ -6,13 +6,14 @@
     <meta charset="utf-8"/>
 </head>
 <body>
+    <div class="loading" id="loading"><p class="loading-text">Generating Waveform...</p></div>
     <div id="player_container">
         <!-- <p id="original_audio_name"></p> -->
         <div id="original_audio" class="player">Original
             <audio controls src="" type="audio/wav" class="audio" id="ori_audio"></audio>
         </div>
         <!-- <p id="monoral_audio_name"></p> -->
-        <div id="monoral_audio">Monoral
+        <div id="monoral_audio" style="display: none;">Monoral
             <audio controls src="" type="audio/wav" class="audio"></audio>
         </div>
     </div>
@@ -24,6 +25,7 @@
             <div id="audio"></div>
         </div>
         <div id="controls" style="">
+            <div id="waveform-container"></div>
             <div>
                 <!-- <div> json<input id="json_file" type="file" name="json_file"> audio<input id="audio_file" type="file" name="audio_file"></div> -->
                 
@@ -44,15 +46,15 @@
                 <button id="next_json" onclick="next_file('next')">▶▶</button><br>
 
                 <span>start</span><input id="start_sec" type="number" onblur="update_state('start_sec');">
-                    <button onclick="update_state('start_sec', -1)">-1</button>
-                    <button onclick="update_state('start_sec', -0.1)">-0.1</button>
-                    <button onclick="update_state('start_sec', 0.1)">+0.1</button>
-                    <button onclick="update_state('start_sec', 1)">+1</button><br>
+                    <button onclick="update_state('start_sec',  offset=-1)">-1</button>
+                    <button onclick="update_state('start_sec',  offset=-0.1)">-0.1</button>
+                    <button onclick="update_state('start_sec', offset= 0.1)">+0.1</button>
+                    <button onclick="update_state('start_sec',  offset=1)">+1</button><br>
                 <span>end</span><input id="end_sec" type="number" onblur="update_state('end_sec');">
-                    <button onclick="update_state('end_sec', -1)">-1</button>
-                    <button onclick="update_state('end_sec', -0.1)">-0.1</button>
-                    <button onclick="update_state('end_sec', 0.1)">+0.1</button>
-                    <button onclick="update_state('end_sec', 1)">+1</button><br>
+                    <button onclick="update_state('end_sec',  offset=-1)">-1</button>
+                    <button onclick="update_state('end_sec',  offset=-0.1)">-0.1</button>
+                    <button onclick="update_state('end_sec', offset=0.1)">+0.1</button>
+                    <button onclick="update_state('end_sec',  offset=1)">+1</button><br>
                 <hr>
                 
                 <ol id="attributes" style="margin: 0;">
@@ -117,4 +119,6 @@
 </body>
 <script src="./audio-json-checker.js"></script>
 <script src="./common.js"></script>
+<script src="./waveform.js"></script>
+<!-- <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script> -->
 </html>

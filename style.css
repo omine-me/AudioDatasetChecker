@@ -2,6 +2,11 @@ html{
     font-size: 1.5rem;
 }
 
+body{
+    background-color: #333;
+    color: white;
+}
+
 .audio{
     width: 100%;
 }
@@ -95,4 +100,26 @@ figure{
     top: 0;
     left: 5%;
     background: blue;
+}
+
+#waveform-container{
+    width: 800px;
+    border: 1px solid;
+}
+
+.loading{
+    position: fixed;
+    display: none;
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    background: #222b;
+    padding: 0;
+    z-index: 1;
+}
+
+.loading-text{
+    text-align: center;
+    margin-top: 35%;
+    font-family: sans-serif;
 }

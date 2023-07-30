@@ -80,11 +80,16 @@ async function loadJson(idx){
 }
 
 
-function update_state(elm_name, offset){
+function update_state(elm_name, offset=undefined, value=undefined){
     let elm = document.getElementById(elm_name)
+    if (custom_validation(elm_name, elm, offset, value) == false){
+        return true
+    }
     if(elm.type == "number"){
         if (offset){
             elm.value = parseFloat((Number(elm.value) + offset).toFixed(4))
+        }else if(value){
+            elm.value = parseFloat((value).toFixed(4))
         }
         laughters[current_laughter][elm_name] = Number(elm.value)
     }else if(elm.type == "checkbox"){
@@ -96,17 +101,52 @@ function update_state(elm_name, offset){
     formatJSON()
 }
 
+function custom_validation(elm_name, elm, offset=undefined, value=undefined){
+    if (elm_name == "start_sec" || elm_name == "end_sec"){
+        if (elm_name == "start_sec"){
+            if (offset == undefined){
+                if (value >= laughters[current_laughter]["end_sec"]){
+                    alert("start_sec must be smaller than end_sec")
+                    return false
+                }
+            }else if (value == undefined){
+                if (laughters[current_laughter]["start_sec"] + offset >= laughters[current_laughter]["end_sec"]){
+                    alert("start_sec must be smaller than end_sec")
+                    return false
+                }
+            }
+        }else{
+            if (offset == undefined){
+                if (laughters[current_laughter]["start_sec"] >= value){
+                    alert("start_sec must be smaller than end_sec")
+                    return false
+                }
+            }else if (value == undefined){
+                if (laughters[current_laughter]["end_sec"] + offset <= laughters[current_laughter]["start_sec"]){
+                    alert("start_sec must be smaller than end_sec")
+                    return false
+                }
+            }
+        }
+    }
+
+    return true
+}
+
 function update_play_before(){
     document.getElementById("play_from_n_sec_before_curr_val").innerText = document.getElementById("play_from_n_sec_before").value
+    if (document.getElementById("play_from_n_sec_before").value == 0){
+        document.getElementById("pause_at_laughter_start").checked = false
+    }
 }
 function update_min_prob(){
     document.getElementById("min_prob_counter").innerText = document.getElementById("min_prob").value
 }
 
 function next_file(next_or_prev){
-    // if(!window.confirm('go to next json? (saved check)')){
-    //     return
-    // }
+if(!window.confirm('go to '+next_or_prev+' json? (saved check)')){
+        return
+    }
     if (next_or_prev == "next"){
         if (current_file_idx+1 >= jsonfiles.length){
             current_file_idx = 0
@@ -178,9 +218,20 @@ function next_laughter(next_or_prev){
                 document.getElementById(attr.name).checked = false
                 // laughters[current_laughter][attr.name] = false
             }
-            
         }
     })
+
+    document.getElementById("laugh_done_ratio").innerText = (current_laughter + 1) + "/" + Object.keys(laughters).length
+    formatJSON()
+
+    if (next_or_prev != ""){
+        // reset advaneced settings
+        document.getElementById("pause_at_laughter_start").checked = false
+        document.getElementById("pause_at_laughter_end").checked = false
+        document.getElementById("play_from_n_sec_before").value = 2
+        update_play_before()
+    }
+    
     let play_from_n_sec_before = document.getElementById("play_from_n_sec_before").value
     ori_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
     mono_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
@@ -191,8 +242,10 @@ function next_laughter(next_or_prev){
         mono_audioElm.play()
         ori_audioElm.pause()
     }
-    document.getElementById("laugh_done_ratio").innerText = (current_laughter + 1) + "/" + Object.keys(laughters).length
-    formatJSON()
+
+    if (laughters[current_laughter]["prob"] >= document.getElementById("min_prob").value && next_or_prev != ""){
+        getWaveform()
+    }    
 }
 
 function changeSource(source){
@@ -220,7 +273,6 @@ function toggle_play(){
         mono_audioElm.pause()
         ori_audioElm.pause()
     }
-    
 }
 function playback_speed(gain){
     console.log(gain)
@@ -240,15 +292,17 @@ function toggle_share_current_state(){
 
 document.addEventListener('keydown', event => {
     // if (event.ctrlKey && event.code === 'KeyD') {
-    // if (event.code.slice(0,-1) === 'Digit' || event.code.slice(0,-1) === 'Numpad') {
-    //     idx = Number(event.code.slice(-1,))-1
-    //     document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
-    //     update_state(attributes[idx].name)
-    //     event.preventDefault();
-    // }else 
-    if (event.code === 'KeyQ') {
-        next_file('prev')
+    if (event.code.slice(0,-1) === 'Digit' || event.code.slice(0,-1) === 'Numpad') {
+        idx = Number(event.code.slice(-1,))
+        // document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
+        // update_state(attributes[idx].name)
+        document.getElementById("play_from_n_sec_before").value = idx
+        update_play_before()
         event.preventDefault();
+    }else 
+    if (event.code === 'KeyQ') {
+        // next_file('prev')
+        // event.preventDefault();
     }else if (event.code === 'KeyW') {
         next_laughter('prev')
         event.preventDefault();
@@ -262,8 +316,8 @@ document.addEventListener('keydown', event => {
         next_laughter('next')
         event.preventDefault();
     }else if (event.code === 'KeyY') {
-        next_file('next')
-        event.preventDefault();
+        // next_file('next')
+        // event.preventDefault();
     }else if (event.code === 'KeyA') {
         playback_speed(-0.2)
         event.preventDefault();
@@ -273,13 +327,16 @@ document.addEventListener('keydown', event => {
     }else if (!event.ctrlKey && event.code === 'KeyS') {
         playback_speed(0.0)
         event.preventDefault();
-    }else if (!event.ctrlKey && event.code === 'KeyC') {
-        toggleSource("mono")
-        event.preventDefault();
+    // }else if (!event.ctrlKey && event.code === 'KeyC') {
+    //     toggleSource("mono")
+    //     event.preventDefault();
     }else if (event.ctrlKey && event.code === 'KeyS') {
         saveJson()
         document.getElementById("save").click()
         event.preventDefault();
+    }else if (event.code === 'KeyV') {
+        document.getElementById("pause_at_laughter_start").checked = !document.getElementById("pause_at_laughter_start").checked
+    }else if(event.code === 'KeyB') {
+        document.getElementById("pause_at_laughter_end").checked = !document.getElementById("pause_at_laughter_end").checked
     }
-    
 });
