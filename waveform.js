@@ -52,19 +52,17 @@ audioElement.addEventListener('loadedmetadata', function () {
     if (!(sourceNode)){
         sourceNode = audioContext.createMediaElementSource(audioElement);
     }
+    if (!(analyserNode)){
+          // create a new AnalyserNode
+          analyserNode = audioContext.createAnalyser();
+          // analyserNode.fftSize = 2048;;
 
+          // connect the sourceNode to the analyserNode
+            sourceNode.connect(analyserNode);
 
-  // create a new AnalyserNode
-  analyserNode = audioContext.createAnalyser();
-//   analyserNode.fftSize = 2048;
-
-  // connect the sourceNode to the analyserNode
-  sourceNode.connect(analyserNode);
-
-  // connect the analyserNode to the destination (speakers)
-  analyserNode.connect(audioContext.destination);
-
-
+            // connect the analyserNode to the destination (speakers)
+            analyserNode.connect(audioContext.destination);
+    } 
 
 //   var bufferLength = analyserNode.frequencyBinCount;
 //     var dataArray = new Uint8Array(bufferLength);     
