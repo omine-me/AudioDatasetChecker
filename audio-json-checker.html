@@ -59,6 +59,7 @@
                 
                 <ol id="attributes" style="margin: 0;">
                     <li><input id="not_a_laugh" type="checkbox" class="checkbox" onclick='update_state("not_a_laugh")'><label for="not_a_laugh" class="attribute"><span>笑いでない</span></label><br></li>
+                    <li><input id="ambiguous_start" type="checkbox" class="checkbox" onclick='update_state("ambiguous_start")' disabled><label for="ambiguous_start" class="attribute"><span>開始点が不明瞭</span></label><br></li>
                     <!-- <li><input id="second_laugh" type="checkbox" class="checkbox" onclick='update_state("second_laugh")' disabled><label for="second_laugh" class="attribute"><span>二度目以降の笑い</span></label><br></li>
                     <li><input id="talk_during_laugh" type="checkbox" class="checkbox" onclick='update_state("talk_during_laugh")' disabled><label for="talk_during_laugh" class="attribute"><span>喋りが挟まる</span></label><br></li>
                     <li><input id="talker_not_divided" type="checkbox" class="checkbox" onclick='update_state("talker_not_divided")' disabled><label for="talker_not_divided" class="attribute"><span>左右混ざってる</span></label><br></li>
@@ -77,7 +78,7 @@
                 <button><a id="save" onclick="saveJson()" download="" target=”_blank”>save</a></button>
                 <hr>
                 <div>
-                    <p style="margin-bottom: 0;">Andanced</p>
+                    <p style="margin-bottom: 0;">Advanced Options</p>
                     <span id="play_from_n_sec_before_curr_val">2</span><span>秒前から再生</span><input id="play_from_n_sec_before" class="attribute" type="range" oninput="update_play_before()" min="0" max="10" step="1" value="2">
                     <input id="pause_at_laughter_start" type="checkbox" class="checkbox"><label for="pause_at_laughter_start" class="attribute"><span>笑いの前で停止</span></label>
                     <input id="pause_at_laughter_end" type="checkbox" class="checkbox"><label for="pause_at_laughter_end" class="attribute"><span>笑いの後で停止</span></label>

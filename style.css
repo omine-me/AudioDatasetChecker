@@ -60,10 +60,12 @@ figure{
     /* font-size: 5rem; */
     font-size: 1.2rem;
     background: gray;
+    background-color: #c2c2c2;
 }
 
 .word_around{
     font-size: 1.2rem;
+    background-color: #c2c2c2;
 }
 
 .flash{
