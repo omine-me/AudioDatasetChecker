@@ -302,8 +302,8 @@ document.addEventListener('keydown', event => {
         event.preventDefault();
     }else 
     if (event.code === 'KeyQ') {
-        // next_file('prev')
-        // event.preventDefault();
+        next_file('prev')
+        event.preventDefault();
     }else if (event.code === 'KeyW') {
         next_laughter('prev')
         event.preventDefault();
@@ -317,8 +317,8 @@ document.addEventListener('keydown', event => {
         next_laughter('next')
         event.preventDefault();
     }else if (event.code === 'KeyY') {
-        // next_file('next')
-        // event.preventDefault();
+        next_file('next')
+        event.preventDefault();
     }else if (event.code === 'KeyA') {
         playback_speed(-0.2)
         event.preventDefault();
