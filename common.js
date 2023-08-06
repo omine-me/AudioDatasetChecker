@@ -112,10 +112,16 @@ window.addEventListener("load", ()=>{
             });
             target.addEventListener('pause', function() {
                 setTimeout(()=>{
-                    channel.postMessage({"play": false, "time": target.currentTime});
+                    if (share_current_state_to_other_tabs){
+                        channel.postMessage({"play": false, "time": target.currentTime});
+                    }
                 }, 250)
             });
         });
+
+        document.getElementById("play_from_n_sec_before").value = play_from_n_sec_before
+        document.getElementById("play_from_n_sec_before").innerText = play_from_n_sec_before
+
         document.getElementById("json_files").focus()
     }else if(window.location.pathname.match(/word_timestamp/)){
         let audios = document.querySelectorAll(".audio");

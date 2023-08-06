@@ -31,7 +31,7 @@
                 
                 <div><span>Json File: </span><span id="json_file_name"></span></div>
                 <div><span>Audio File: </span><span id="audio_file_name"></span></div>
-                <div><span>Files: </span><span id="file_done_ratio"></span></div>
+                <!-- <div><span>Files: </span><span id="file_done_ratio"></span></div> -->
                 <div><span>Laughs: </span><span id="laugh_done_ratio"></span></div>
                 <div>Audio Source: 
                     <label for="play_ori" onclick='changeSource("ori")'><input type="radio" id="play_ori" name="play_source" value="ori" checked>ori</label>
@@ -79,7 +79,7 @@
                 <hr>
                 <div>
                     <p style="margin-bottom: 0;">Advanced Options</p>
-                    <span id="play_from_n_sec_before_curr_val">2</span><span>秒前から再生</span><input id="play_from_n_sec_before" class="attribute" type="range" oninput="update_play_before()" min="0" max="10" step="1" value="2">
+                    <span id="play_from_n_sec_before_curr_val"></span><span>秒前から再生</span><input id="play_from_n_sec_before" class="attribute" type="range" oninput="update_play_before()" min="0" max="10" step="0.5">
                     <input id="pause_at_laughter_start" type="checkbox" class="checkbox"><label for="pause_at_laughter_start" class="attribute"><span>笑いの前で停止</span></label>
                     <input id="pause_at_laughter_end" type="checkbox" class="checkbox"><label for="pause_at_laughter_end" class="attribute"><span>笑いの後で停止</span></label>
                     <input id="except_by_laugh_by_oneself_prob" type="checkbox" class="checkbox"><label for="except_by_laugh_by_oneself_prob" class="attribute"><span>自発語確定度が低い笑いをスキップ</span></label>

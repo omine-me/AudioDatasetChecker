@@ -5,6 +5,7 @@ let ori_audioElm = ""
 let mono_audioElm = ""
 let laughters = []
 let current_laughter = 0
+let play_from_n_sec_before = 2
 let play_source = "ori"
 // const attributes = ["not_a_laugh",
 //                     // "second_laugh", //同じことで笑うのが二回目以上// 二度目以降の笑い
@@ -229,7 +230,7 @@ function next_laughter(next_or_prev){
         // reset advaneced settings
         document.getElementById("pause_at_laughter_start").checked = false
         document.getElementById("pause_at_laughter_end").checked = false
-        document.getElementById("play_from_n_sec_before").value = 2
+        document.getElementById("play_from_n_sec_before").value = play_from_n_sec_before
         update_play_before()
     }
     
