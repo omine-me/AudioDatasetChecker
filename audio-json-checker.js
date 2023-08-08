@@ -234,7 +234,6 @@ function next_laughter(next_or_prev){
         update_play_before()
     }
     
-    let play_from_n_sec_before = document.getElementById("play_from_n_sec_before").value
     ori_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
     mono_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
     if (play_source == "ori"){
@@ -299,6 +298,7 @@ document.addEventListener('keydown', event => {
         // document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
         // update_state(attributes[idx].name)
         document.getElementById("play_from_n_sec_before").value = idx
+        play_from_n_sec_before = idx
         update_play_before()
         event.preventDefault();
     }else 
@@ -335,6 +335,7 @@ document.addEventListener('keydown', event => {
     }else if (event.ctrlKey && event.code === 'KeyS') {
         saveJson()
         document.getElementById("save").click()
+        alert("saved!")
         event.preventDefault();
     }else if (event.code === 'KeyV') {
         document.getElementById("pause_at_laughter_start").checked = !document.getElementById("pause_at_laughter_start").checked
