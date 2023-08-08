@@ -137,6 +137,7 @@ function custom_validation(elm_name, elm, offset=undefined, value=undefined){
 
 function update_play_before(){
     document.getElementById("play_from_n_sec_before_curr_val").innerText = document.getElementById("play_from_n_sec_before").value
+    play_from_n_sec_before = document.getElementById("play_from_n_sec_before").value
     if (document.getElementById("play_from_n_sec_before").value == 0){
         document.getElementById("pause_at_laughter_start").checked = false
     }
