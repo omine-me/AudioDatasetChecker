@@ -42,6 +42,7 @@ loadingElm = document.getElementById("loading")
 let analyserNode = undefined;
 var waveform_bufferLength = undefined;
 var waveform_dataArray = undefined;
+let current_playbackRate = 1;
 
 // when the audio file is loaded
 audioElement.addEventListener('loadedmetadata', function () {
@@ -103,6 +104,7 @@ function getWaveform() {
     // get the time domain data from the analyserNode
 
     audioElement.currentTime = waveform_start;
+    current_playbackRate = audioElement.playbackRate;
     audioElement.playbackRate = waveformplaybackRate;
     audioElement.play();
     // var bufferLength = analyserNode.frequencyBinCount;
@@ -117,7 +119,7 @@ function getWaveform() {
 
             audioElement.pause();
             audioElement.currentTime = currentTime;
-            audioElement.playbackRate = 1;
+            audioElement.playbackRate = current_playbackRate;
             drawn = true;
             loadingElm.style.display = "none";
     }, waveform_sec/waveformplaybackRate*1000);
