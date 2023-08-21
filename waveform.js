@@ -233,4 +233,5 @@ canvas.addEventListener('click', function(event) {
         ori_audioElm.currentTime = waveform_start + x/800*waveform_sec;
     }
     drawWaveform(audioElement.currentTime, event.offsetX);
+    audioElement.play();
   });

@@ -338,9 +338,15 @@ document.addEventListener('keydown', event => {
         document.getElementById("save").click()
         alert("saved!")
         event.preventDefault();
-    }else if (event.code === 'KeyV') {
+    }else if (!event.ctrlKey && event.code === 'KeyV') {
         document.getElementById("pause_at_laughter_start").checked = !document.getElementById("pause_at_laughter_start").checked
-    }else if(event.code === 'KeyB') {
+    }else if(!event.ctrlKey && event.code === 'KeyB') {
         document.getElementById("pause_at_laughter_end").checked = !document.getElementById("pause_at_laughter_end").checked
+    }else if (!event.ctrlKey && event.code === 'KeyZ') {
+        update_state('start_sec',  offset=-0.1)
+        drawWaveform(ori_audioElm.currentTime, undefined);
+    }else if(!event.ctrlKey && event.code === 'KeyX') {
+        update_state('start_sec',  offset=0.1)
+        drawWaveform(ori_audioElm.currentTime, undefined);
     }
 });
