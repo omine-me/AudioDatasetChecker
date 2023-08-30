@@ -9,7 +9,8 @@
     <div class="loading" id="loading"><p class="loading-text">Generating Waveform...</p></div>
     <div id="player_container">
         <!-- <p id="original_audio_name"></p> -->
-        <div id="original_audio" class="player">Original
+        <div id="original_audio" class="player">
+            <!-- Original -->
             <audio controls src="" type="audio/wav" class="audio" id="ori_audio"></audio>
         </div>
         <!-- <p id="monoral_audio_name"></p> -->
@@ -33,7 +34,7 @@
                 <div><span>Audio File: </span><span id="audio_file_name"></span></div>
                 <!-- <div><span>Files: </span><span id="file_done_ratio"></span></div> -->
                 <div><span>Laughs: </span><span id="laugh_done_ratio"></span></div>
-                <div>Audio Source: 
+                <div style="display: none;">Audio Source: 
                     <label for="play_ori" onclick='changeSource("ori")'><input type="radio" id="play_ori" name="play_source" value="ori" checked>ori</label>
                     <label for="play_mono" onclick='changeSource("mono")'><input type="radio" id="play_mono" name="play_source" value="mono">mono</label>
                 </div>
@@ -55,11 +56,13 @@
                     <button onclick="update_state('end_sec',  offset=-0.1)">-0.1</button>
                     <button onclick="update_state('end_sec', offset=0.1)">+0.1</button>
                     <button onclick="update_state('end_sec',  offset=1)">+1</button><br>
+                    <button><a id="save" onclick="saveJson()" download="" target=”_blank”>save</a></button>
                 <hr>
                 
                 <ol id="attributes" style="margin: 0;">
                     <li><input id="not_a_laugh" type="checkbox" class="checkbox" onclick='update_state("not_a_laugh")'><label for="not_a_laugh" class="attribute"><span>笑いでない</span></label><br></li>
                     <li><input id="ambiguous_start" type="checkbox" class="checkbox" onclick='update_state("ambiguous_start")'><label for="ambiguous_start" class="attribute"><span>開始点が不明瞭</span></label><br></li>
+                    <!-- <li><input id="isolated" type="checkbox" class="checkbox" onclick='update_state("isolated")'><label for="isolated" class="attribute"><span>分離された笑い（しゃべり笑いでない。他の笑いと重ならない）</span></label><br></li> -->
                     <!-- <li><input id="second_laugh" type="checkbox" class="checkbox" onclick='update_state("second_laugh")' disabled><label for="second_laugh" class="attribute"><span>二度目以降の笑い</span></label><br></li>
                     <li><input id="talk_during_laugh" type="checkbox" class="checkbox" onclick='update_state("talk_during_laugh")' disabled><label for="talk_during_laugh" class="attribute"><span>喋りが挟まる</span></label><br></li>
                     <li><input id="talker_not_divided" type="checkbox" class="checkbox" onclick='update_state("talker_not_divided")' disabled><label for="talker_not_divided" class="attribute"><span>左右混ざってる</span></label><br></li>
@@ -73,10 +76,6 @@
                     <li><span>自発語確定度</span><input id="laugh_by_oneself_prob" type="text"><br></li>
                     <li><span>その他のエラー</span><input id="other_error" type="text" class="checkbox" style="display: block;width: 100%;" onfocusout='update_state("other_error")'></li> -->
                 </ol>
-                
-                <hr>
-                <button><a id="save" onclick="saveJson()" download="" target=”_blank”>save</a></button>
-                <hr>
                 <div>
                     <p style="margin: 0;">Advanced Options</p>
                     <span id="play_from_n_sec_before_curr_val"></span><span>秒前から再生</span><input id="play_from_n_sec_before" class="attribute" type="range" oninput="update_play_before()" min="0" max="10" step="0.5">

@@ -277,7 +277,6 @@ function toggle_play(){
     }
 }
 function playback_speed(gain){
-    console.log(gain)
     if (gain == 0.0){
         ori_audioElm.playbackRate = 1.0
         mono_audioElm.playbackRate = 1.0
