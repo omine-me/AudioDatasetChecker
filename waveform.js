@@ -32,7 +32,7 @@ waveformContainer.appendChild(canvas);
 waveform_start = 0;
 waveform_end = 0;
 waveform_sec = 10;
-waveformplaybackRate = 3;
+waveformplaybackRate = 16;
 drawn = false;
 audioContext = undefined
 sourceNode = undefined
