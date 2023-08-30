@@ -30,8 +30,8 @@
             <div>
                 <!-- <div> json<input id="json_file" type="file" name="json_file"> audio<input id="audio_file" type="file" name="audio_file"></div> -->
                 
-                <div><span>Json File: </span><span id="json_file_name"></span></div>
-                <div><span>Audio File: </span><span id="audio_file_name"></span></div>
+                <div><span>Json: </span><span id="json_file_name"></span></div>
+                <div><span>Audio: </span><span id="audio_file_name"></span></div>
                 <!-- <div><span>Files: </span><span id="file_done_ratio"></span></div> -->
                 <div><span>Laughs: </span><span id="laugh_done_ratio"></span></div>
                 <div style="display: none;">Audio Source: 
@@ -55,8 +55,8 @@
                     <button onclick="update_state('end_sec',  offset=-1)">-1</button>
                     <button onclick="update_state('end_sec',  offset=-0.1)">-0.1</button>
                     <button onclick="update_state('end_sec', offset=0.1)">+0.1</button>
-                    <button onclick="update_state('end_sec',  offset=1)">+1</button><br>
-                    <button><a id="save" onclick="saveJson()" download="" target=”_blank”>save</a></button>
+                    <button onclick="update_state('end_sec',  offset=1)">+1</button>
+                    <button style="margin-left: 3rem;"><a id="save" onclick="saveJson()" download="" target=”_blank”>save</a></button>
                 <hr>
                 
                 <ol id="attributes" style="margin: 0;">

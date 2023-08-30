@@ -170,6 +170,22 @@ function drawWaveform(current_time=0, mouseX=undefined) {
         context.stroke();
     }
 
+    // draw scale by 0.1
+    for (var i = 0; i < waveform_sec*10; i++) {
+        x = i*8;
+        y = canvas.height*.9;
+        if (i%10 == 0){
+            y = canvas.height*.8;
+        }
+        context.beginPath();
+        context.moveTo(x, canvas.height);
+        context.lineTo(x, y);
+        context.strokeStyle = 'black';
+        context.lineWidth = 1;
+        context.stroke();
+    }
+    
+
     curr_laugh = laughters[current_laughter]
     context.fillStyle = 'rgba(0, 0, 255, 0.5)';
 

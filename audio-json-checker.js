@@ -166,7 +166,7 @@ if(!window.confirm('go to '+next_or_prev+' json? (saved check)')){
     
 
     // reset settings
-    document.getElementById("except_not_a_laugh").checked = false
+    // document.getElementById("except_not_a_laugh").checked = false
     document.getElementById("except_by_laugh_by_oneself_prob").checked = false
 
     select(String(current_file_idx), 'json')
