@@ -169,7 +169,6 @@ if(!window.confirm('go to '+next_or_prev+' json? (saved check)')){
     // document.getElementById("except_not_a_laugh").checked = false
     document.getElementById("except_by_laugh_by_oneself_prob").checked = false
 
-    select(String(current_file_idx), 'json')
 }
 
 function next_laughter(next_or_prev){
@@ -293,19 +292,22 @@ function toggle_share_current_state(){
 
 document.addEventListener('keydown', event => {
     // if (event.ctrlKey && event.code === 'KeyD') {
-    if (event.code.slice(0,-1) === 'Digit' || event.code.slice(0,-1) === 'Numpad') {
+    if (event.code.slice(0,-1) === 'Digit') {
+        idx = Number(event.code.slice(-1,))-1
+        document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
+        update_state(attributes[idx].name)
+        update_play_before()
+        event.preventDefault();
+    }else if(event.code.slice(0,-1) === 'Numpad'){
         idx = Number(event.code.slice(-1,))
-        // document.getElementById(attributes[idx].name).checked = !document.getElementById(attributes[idx].name).checked;
-        // update_state(attributes[idx].name)
         document.getElementById("play_from_n_sec_before").value = idx
         play_from_n_sec_before = idx
         update_play_before()
         event.preventDefault();
-    }else 
-    if (event.code === 'KeyQ') {
+    }else if (!event.ctrlKey && event.code === 'KeyQ') {
         next_file('prev')
         event.preventDefault();
-    }else if (event.code === 'KeyW') {
+    }else if (!event.ctrlKey && event.code === 'KeyW') {
         next_laughter('prev')
         event.preventDefault();
     }else if (!event.ctrlKey && event.code === 'KeyR') {
@@ -314,16 +316,16 @@ document.addEventListener('keydown', event => {
     }else if (event.code === 'KeyE' || event.code === 'Space') {
         toggle_play()
         event.preventDefault();
-    }else if (event.code === 'KeyT') {
+    }else if (!event.ctrlKey && event.code === 'KeyT') {
         next_laughter('next')
         event.preventDefault();
-    }else if (event.code === 'KeyY') {
+    }else if (!event.ctrlKey && event.code === 'KeyY') {
         next_file('next')
         event.preventDefault();
-    }else if (event.code === 'KeyA') {
+    }else if (!event.ctrlKey && event.code === 'KeyA') {
         playback_speed(-0.2)
         event.preventDefault();
-    }else if (event.code === 'KeyD') {
+    }else if (!event.ctrlKey && event.code === 'KeyD') {
         playback_speed(0.2)
         event.preventDefault();
     }else if (!event.ctrlKey && event.code === 'KeyS') {
