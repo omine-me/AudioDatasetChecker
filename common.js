@@ -33,6 +33,7 @@ function select(idx, type){
     }
     if (type=="json"){
         let basename = jsonfiles[idx]["name"].split(".")[0]
+        basename = basename.split(/[_//]/).slice(-1)[0] // _ と / で分割し最後を取得。より曖昧な名前でマッチするように
         let audio_found = false;
         for (let i = 0; i < audiofiles.length; i++) {
             if (audiofiles[i]["name"].match(basename.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'))){
