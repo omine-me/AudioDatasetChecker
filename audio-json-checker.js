@@ -21,6 +21,7 @@ let play_source = "ori"
 const attributes = [
     {"name": "not_a_laugh", "type": "bool", "dis_name": "笑いでない"},
     {"name": "ambiguous_start", "type": "bool", "dis_name": "開始点が不明瞭"},
+    {"name": "multiple_laughs", "type": "bool", "dis_name": "-5秒~5秒に別の笑いが含まれる"},
     // {"name": "laugh_length_error" , "type": "bool", "dis_name": "笑い長さ変"},
     // {"name": "laugh_by_oneself" , "type": "bool", "dis_name": "自発語の影響で笑う"},
     // {"name": "laugh_by_oneself_prob" , "type": "float", "dis_name": "自発語確定度"},
