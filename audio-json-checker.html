@@ -46,11 +46,11 @@
                 <button onclick="next_laughter('next')">▶</button>
                 <button id="next_json" onclick="next_file('next')">▶▶</button><br>
 
-                <span>start</span><input id="start_sec" type="number" onblur="update_state('start_sec');">
-                    <button onclick="update_state('start_sec',  offset=-1)">-1</button>
-                    <button onclick="update_state('start_sec',  offset=-0.1)">-0.1</button>
-                    <button onclick="update_state('start_sec', offset= 0.1)">+0.1</button>
-                    <button onclick="update_state('start_sec',  offset=1)">+1</button><br>
+                <span>start</span><input id="_start_sec" type="number" onblur="update_state(start_sec_attr_name);">
+                    <button onclick="update_state(start_sec_attr_name,  offset=-1)">-1</button>
+                    <button onclick="update_state(start_sec_attr_name,  offset=-0.1)">-0.1</button>
+                    <button onclick="update_state(start_sec_attr_name, offset= 0.1)">+0.1</button>
+                    <button onclick="update_state(start_sec_attr_name,  offset=1)">+1</button><br>
                 <span>end</span><input id="end_sec" type="number" onblur="update_state('end_sec');">
                     <button onclick="update_state('end_sec',  offset=-1)">-1</button>
                     <button onclick="update_state('end_sec',  offset=-0.1)">-0.1</button>

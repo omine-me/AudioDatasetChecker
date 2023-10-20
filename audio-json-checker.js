@@ -73,7 +73,7 @@ async function loadJson(idx){
             formatJSON();
             current_laughter = 0
             // console.log(laughters)
-            document.getElementById("start_sec").value = laughters[current_laughter].start_sec
+            document.getElementById(start_sec_attr_name).value = laughters[current_laughter][start_sec_attr_name]
             document.getElementById("end_sec").value = laughters[current_laughter].end_sec
             // loadaudio(basename)
             document.getElementById("json_file_name").innerText = jsonfiles[idx]["name"]
@@ -105,27 +105,27 @@ function update_state(elm_name, offset=undefined, value=undefined){
 }
 
 function custom_validation(elm_name, elm, offset=undefined, value=undefined){
-    if (elm_name == "start_sec" || elm_name == "end_sec"){
-        if (elm_name == "start_sec"){
+    if (elm_name == start_sec_attr_name || elm_name == "end_sec"){
+        if (elm_name == start_sec_attr_name){
             if (offset == undefined){
                 if (value >= laughters[current_laughter]["end_sec"]){
                     alert("start_sec must be smaller than end_sec")
                     return false
                 }
             }else if (value == undefined){
-                if (laughters[current_laughter]["start_sec"] + offset >= laughters[current_laughter]["end_sec"]){
+                if (laughters[current_laughter][start_sec_attr_name] + offset >= laughters[current_laughter]["end_sec"]){
                     alert("start_sec must be smaller than end_sec")
                     return false
                 }
             }
         }else{
             if (offset == undefined){
-                if (laughters[current_laughter]["start_sec"] >= value){
+                if (laughters[current_laughter][start_sec_attr_name] >= value){
                     alert("start_sec must be smaller than end_sec")
                     return false
                 }
             }else if (value == undefined){
-                if (laughters[current_laughter]["end_sec"] + offset <= laughters[current_laughter]["start_sec"]){
+                if (laughters[current_laughter]["end_sec"] + offset <= laughters[current_laughter][start_sec_attr_name]){
                     alert("start_sec must be smaller than end_sec")
                     return false
                 }
@@ -204,7 +204,7 @@ function next_laughter(next_or_prev){
             }
         }
     }
-    document.getElementById("start_sec").value = laughters[current_laughter].start_sec
+    document.getElementById(start_sec_attr_name).value = laughters[current_laughter][start_sec_attr_name]
     document.getElementById("end_sec").value = laughters[current_laughter].end_sec
     // console.log(laughters[0])
     attributes.forEach((attr)=>{
@@ -236,8 +236,8 @@ function next_laughter(next_or_prev){
         update_play_before()
     }
     
-    ori_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
-    mono_audioElm.currentTime= laughters[current_laughter].start_sec - play_from_n_sec_before
+    ori_audioElm.currentTime= laughters[current_laughter][start_sec_attr_name] - play_from_n_sec_before
+    mono_audioElm.currentTime= laughters[current_laughter][start_sec_attr_name] - play_from_n_sec_before
     if (play_source == "ori"){
         ori_audioElm.play()
         mono_audioElm.pause()
@@ -346,10 +346,10 @@ document.addEventListener('keydown', event => {
     }else if(!event.ctrlKey && event.code === 'KeyB') {
         document.getElementById("pause_at_laughter_end").checked = !document.getElementById("pause_at_laughter_end").checked
     }else if (!event.ctrlKey && event.code === 'KeyZ') {
-        update_state('start_sec',  offset=-0.1)
+        update_state(start_sec_attr_name,  offset=-0.1)
         drawWaveform(ori_audioElm.currentTime, undefined);
     }else if(!event.ctrlKey && event.code === 'KeyX') {
-        update_state('start_sec',  offset=0.1)
+        update_state(start_sec_attr_name,  offset=0.1)
         drawWaveform(ori_audioElm.currentTime, undefined);
     }
 });

@@ -189,9 +189,9 @@ function drawWaveform(current_time=0, mouseX=undefined) {
     curr_laugh = laughters[current_laughter]
     context.fillStyle = 'rgba(0, 0, 255, 0.5)';
 
-    context.fillRect((curr_laugh["start_sec"]-waveform_start)/waveform_sec*800,
+    context.fillRect((curr_laugh[start_sec_attr_name]-waveform_start)/waveform_sec*800,
                      0, 
-                     (curr_laugh["end_sec"]-curr_laugh["start_sec"])/waveform_sec*800, 
+                     (curr_laugh["end_sec"]-curr_laugh[start_sec_attr_name])/waveform_sec*800, 
                      canvas.height);
 }
 
@@ -243,7 +243,7 @@ canvas.addEventListener('click', function(event) {
     // get the cursor location within the canvas
     var x = event.offsetX;
     if (event.ctrlKey || event.metaKey){
-        update_state('start_sec', undefined, value=waveform_start + x/800*waveform_sec);
+        update_state(start_sec_attr_name, undefined, value=waveform_start + x/800*waveform_sec);
     }else if (event.shiftKey){
         update_state('end_sec', undefined, value=waveform_start + x/800*waveform_sec);
         event.preventDefault();

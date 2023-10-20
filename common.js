@@ -1,4 +1,7 @@
 let share_current_state_to_other_tabs = true;
+let start_sec_attr_name = "start_sec"; // "yamnet_predicted_start_sec"
+//chenge id of id="_start_sec" to start_sec_attr_name
+document.getElementById("_start_sec").id = start_sec_attr_name
 
 document.getElementById("json_files").addEventListener("change", ev => {
     jsonfiles = ev.target.files
@@ -10,7 +13,9 @@ document.getElementById("audio_files").addEventListener("change", ev => {
 });
 
 function loadaudio(audiofile){
+    audio_playback_rate = ori_audioElm.playbackRate
     ori_audioElm.src =  URL.createObjectURL(audiofile);
+    ori_audioElm.playbackRate = audio_playback_rate
     document.getElementById("audio_file_name").innerText = audiofile["name"]
 }
 
@@ -99,7 +104,7 @@ window.addEventListener("load", ()=>{
                     channel.postMessage({"play": true, "time": curr_time});
                 }
                 show_current_bar_in_waveform()
-                if (laughters[current_laughter].start_sec < curr_time && curr_time < laughters[current_laughter].end_sec){
+                if (laughters[current_laughter][start_sec_attr_name] < curr_time && curr_time < laughters[current_laughter].end_sec){
                     if (document.getElementById("pause_at_laughter_start").checked){
                         ori_audioElm.pause()
                     }
