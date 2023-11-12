@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compare Laughters</title>
+    <link type="text/css" rel="stylesheet" href="./style.css">
+    <meta charset="utf-8" />
+</head>
+
+<body style="margin: 0;">
+    <div id="laughters_container">
+        <div id="laughter_json1" class="laughter_json" onscroll="syncLeft(1, arguments[0])"><input type='file' name='uploadFile' id='uploadFile1' class='laughter_json_input' onchange="loadLaughterJson(1, arguments[0])" ></input></div>
+        <div id="laughter_json2" class="laughter_json" onscroll="syncLeft(2, arguments[0])"><input type='file' name='uploadFile' id='uploadFile2' class='laughter_json_input' onchange="loadLaughterJson(2, arguments[0])"></input></div>
+        <div id="laughter_json3" class="laughter_json" onscroll="syncLeft(3, arguments[0])"><input type='file' name='uploadFile' id='uploadFile3' class='laughter_json_input' onchange="loadLaughterJson(3, arguments[0])"></input></div>
+    </div>
+    <input type='file' name='uploadFile' id='uploadFileAudio' onchange="loadLaughterAudio(arguments[0])"></input>
+    <audio controls src="" type="audio/wav" class="audio" id="ori_audio"></audio>    
+</body>
+<script src="./compare.js"></script>
+<script src="./common.js"></script>
+
+</html>

@@ -246,7 +246,8 @@ function next_laughter(next_or_prev){
         ori_audioElm.pause()
     }
 
-    if (laughters[current_laughter]["prob"] >= document.getElementById("min_prob").value && (next_or_prev != "" || current_laughter == 0)){
+    // if (laughters[current_laughter]["prob"] >= document.getElementById("min_prob").value && (next_or_prev != "" || current_laughter == 0)){
+    if ((next_or_prev != "" || current_laughter == 0)){
         getWaveform()
     }    
 }

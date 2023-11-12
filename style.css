@@ -135,3 +135,40 @@ figure{
     margin-top: 35%;
     font-family: sans-serif;
 }
+
+/* compare.html */
+#laughters_container{
+    height: 95vh;
+    margin: 0;
+}
+
+.laughter_json{
+    position: relative;
+    height: 30%;
+    overflow: scroll;
+}
+
+.laughter_json_name{
+    size: 1rem;
+}
+
+.laughter_json_input{
+    position: fixed;
+    z-index: 100;
+}
+
+.seekbar{
+    position: absolute;
+    background-color: aliceblue;
+    top: 0px;
+    height: 100%;
+    width: 1px;
+}
+
+.endbar{
+    position: absolute;
+    background-color: aquamarine;
+    top: 0px;
+    height: 100%;
+    width: 1px;
+}
