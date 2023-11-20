@@ -42,26 +42,16 @@ async function loadLaughterJson(row, e){
 
                 // add start and end time to the div
                 var start = document.createElement('div');
-                start.style.fontFamily = 'sans-serif';
-                start.style.position = 'absolute';
-                start.style.backgroundColor = 'green';
-                start.style.top = '0px';
-                start.style.height = "30px";
+                start.className = 'sec_text';
+                start.style.top = '0';
                 start.style.left = l_json[key]['start_sec'] * 10. + 'px';
-                start.style.color = 'white';
-                start.style.fontSize = '30px';
                 start.innerHTML = l_json[key]['start_sec'].toFixed(3);
                 container_div.appendChild(start);
 
                 var end = document.createElement('div');
-                end.style.fontFamily = 'sans-serif';
-                end.style.position = 'absolute';
-                end.style.backgroundColor = 'green';
-                end.style.bottom = '30px';
-                end.style.height = "30px";
+                end.className = 'sec_text';
+                end.style.bottom = '0';
                 end.style.left = (l_json[key]['end_sec']) * 10. + 'px';
-                end.style.color = 'white';
-                end.style.fontSize = '30px';
                 end.innerHTML = l_json[key]['end_sec'].toFixed(3);
                 container_div.appendChild(end);
 

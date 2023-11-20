@@ -138,14 +138,15 @@ figure{
 
 /* compare.html */
 #laughters_container{
-    height: 95vh;
+    height: 85vh;
     margin: 0;
 }
 
 .laughter_json{
     position: relative;
-    height: 30%;
-    overflow: scroll;
+    height: 33.3%;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .laughter_json_name{
@@ -171,4 +172,19 @@ figure{
     top: 0px;
     height: 100%;
     width: 1px;
+}
+
+.sec_text{
+    font-family: sans-serif;
+    position: absolute;
+    background-color: green;
+    height: 30px;
+    color: white;
+    font-size: 30px;
+}
+
+.sec_text:hover {
+    border: .1rem solid;
+    z-index: 1;
+    color: white;
 }
