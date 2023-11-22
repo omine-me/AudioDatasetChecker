@@ -156,6 +156,7 @@ figure{
 .laughter_json_input{
     position: fixed;
     z-index: 100;
+    font-size: 3vh;
 }
 
 .seekbar{
@@ -178,9 +179,9 @@ figure{
     font-family: sans-serif;
     position: absolute;
     background-color: green;
-    height: 30px;
+    height: 3vh;
     color: white;
-    font-size: 30px;
+    font-size: 3vh;
 }
 
 .sec_text:hover {
