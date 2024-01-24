@@ -189,3 +189,7 @@ figure{
     z-index: 1;
     color: white;
 }
+
+#uploadFileAudio{
+    font-size: 3vh;
+}
